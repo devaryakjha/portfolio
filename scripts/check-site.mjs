@@ -64,6 +64,26 @@ for (const [saved, dark, blocked, expected] of [[null, false, false, 'light'], [
   assert.equal(root.dataset.theme, next, 'Explicit choice overrides system changes');
 }
 assert.equal(new Set([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1])).size, 6, 'Six distinct project artworks');
+// Verify loops stop offscreen and while the tab is hidden, then resume together.
+{
+  let intersect, visibilityChange;
+  const artwork = { running: false, toggleAttribute(_, value) { this.running = value; }, removeAttribute() { this.running = false; } };
+  const document = { hidden: false, querySelectorAll: () => [artwork], addEventListener(_, listener) { visibilityChange = listener; } };
+  vm.runInNewContext(fs.readFileSync('src/scripts/artwork-motion.js', 'utf8'), {
+    document,
+    IntersectionObserver: class { constructor(listener) { intersect = listener; } observe() {} },
+  });
+  intersect([{ target: artwork, isIntersecting: true, intersectionRatio: 1 }]);
+  assert.equal(artwork.running, true);
+  document.hidden = true; visibilityChange();
+  assert.equal(artwork.running, false, 'Hidden tabs pause artwork');
+  document.hidden = false; visibilityChange();
+  assert.equal(artwork.running, true, 'Returning to the tab resumes visible artwork');
+  intersect([{ target: artwork, isIntersecting: false, intersectionRatio: 0 }]);
+  assert.equal(artwork.running, false, 'Offscreen artwork pauses');
+  visibilityChange();
+  assert.equal(artwork.running, false, 'Offscreen artwork stays paused on tab changes');
+}
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
 assert.ok(!sitemap.includes('/explore/'), 'No preview URLs in sitemap');
 console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and six project artworks.`);

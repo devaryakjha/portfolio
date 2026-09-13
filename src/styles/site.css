@@ -290,3 +290,95 @@ img,svg { max-width: 100%; display: block; }
 .portrait-outline { display: none; }
 
 .sticker-instructions { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+
+@media (prefers-reduced-motion: no-preference) {
+ .grid-artwork .art-motion { animation-play-state: paused; }
+ .grid-artwork[data-motion-running] .art-motion { animation-play-state: running; }
+}
+
+.oore-paper { fill: light-dark(#faf9f6,#191919); stroke: light-dark(#aaa9a3,#555); }
+.oore-rule { stroke: light-dark(#d2d0c9,#3d3d3d); }
+.oore-line { stroke: light-dark(#41403d,#ddd); }
+.oore-solid { fill: light-dark(#41403d,#ddd); }
+.oore-reverse { stroke: light-dark(#faf9f6,#191919); }
+.oore-type { fill: light-dark(#41403d,#ddd); font: 11px 'Courier New',monospace; }
+.oore-small { fill: light-dark(#62615d,#aaa); font: 9px 'Courier New',monospace; }
+.oore-mark { filter: grayscale(1) brightness(0) invert(var(--logo-invert)); }
+.oore-stack-ios { transform: rotate(-5deg); transform-origin: 200px 150px; }
+.oore-stack-android { transform: rotate(5deg); transform-origin: 200px 150px; }
+@media (prefers-reduced-motion: no-preference) {
+ .oore-stack-intro { animation: oore-stack-arrive 1.2s cubic-bezier(.23,1,.32,1) both; }
+ .oore-stack-ios,.oore-stack-android,.oore-stack-front,.oore-arrow { transition: transform 480ms cubic-bezier(.23,1,.32,1); }
+ .grid-art-link:focus-visible .oore-stack-ios { transform: translate(-45px,-15px) rotate(-12deg); }
+ .grid-art-link:focus-visible .oore-stack-android { transform: translate(45px,-12px) rotate(12deg); }
+ .grid-art-link:focus-visible .oore-stack-front { transform: translateY(12px); }
+ @media (hover: hover) and (pointer: fine) {
+  .grid-artwork-oore-build:hover .oore-stack-ios { transform: translate(-45px,-15px) rotate(-12deg); }
+  .grid-artwork-oore-build:hover .oore-stack-android { transform: translate(45px,-12px) rotate(12deg); }
+  .grid-artwork-oore-build:hover .oore-stack-front { transform: translateY(12px); }
+  .grid-artwork-oore-build:hover .oore-arrow { transform: translateX(3px); }
+ }
+}
+@keyframes oore-stack-arrive { from { transform: translateY(14px) scale(.97); } to { transform: translateY(0) scale(1); } }
+
+/* Small product demonstrations; each transition reverses from its current position. */
+.art-paper { fill: light-dark(#faf9f6,#191919); stroke: light-dark(#aaa9a3,#555); }
+.art-wire { stroke: light-dark(#a3a29e,#666); }
+.art-ink { fill: light-dark(#41403d,#ddd); }
+.art-type { fill: light-dark(#41403d,#ddd); font: 11px 'Courier New',monospace; }
+.art-small { fill: light-dark(#62615d,#aaa); font: 9px 'Courier New',monospace; }
+.art-highlight { fill: light-dark(#deddd7,#303030); }
+.gpuicn-slider-fill { transform-box: fill-box; transform-origin: left; }
+.bonsai-left,.bonsai-right { transform-origin: 200px 207px; }
+.gpuicn-button { transform-origin: 128px 106px; }
+.seisei-field-a { transform-origin: 67px 103px; }
+.seisei-field-c { transform-origin: 67px 165px; }
+@media (prefers-reduced-motion: no-preference) {
+ .art-piece { transition: transform 480ms cubic-bezier(.23,1,.32,1), opacity 320ms ease; }
+ .tagflow-source { transform-origin: 100px 140px; }
+ .tagflow-heading { transform: translateY(7px); }
+ .tagflow-heading .art-highlight { opacity: 0; transition: opacity 320ms ease; }
+ .tagflow-paragraph { transform: translateY(10px); opacity: .6; transition-delay: 40ms; }
+ .tagflow-media { transform: translateY(13px); opacity: .4; transition-delay: 80ms; }
+ .gpuicn-switch { transform: translateX(-16px); }
+ .gpuicn-check { opacity: .25; }
+ .bonsai-left { transform: rotate(14deg); }
+ .bonsai-right { transform: rotate(-14deg); }
+ .anpec-scan { opacity: .25; }
+ .anpec-result { opacity: 0; transition-delay: 100ms; }
+ .seisei-field-a { transform: translate(-3px,-3px) rotate(-9deg); }
+ .seisei-field-b { transform: translateX(5px); }
+ .seisei-field-c { transform: translate(-3px,3px) rotate(8deg); }
+ .seisei-result { transform: translateX(-10px); opacity: .4; transition-delay: 80ms; }
+ .grid-art-link:focus-visible .tagflow-source { transform: translateX(-5px) rotate(-3deg); }
+ .grid-art-link:focus-visible .tagflow-heading,.grid-art-link:focus-visible .tagflow-paragraph,.grid-art-link:focus-visible .tagflow-media { transform: translateY(0); opacity: 1; }
+ .grid-art-link:focus-visible .tagflow-heading .art-highlight { opacity: 1; }
+ .grid-art-link:focus-visible .gpuicn-switch { transform: translateX(0); }
+ .grid-art-link:focus-visible .gpuicn-check { opacity: 1; }
+ .grid-art-link:focus-visible .gpuicn-button { transform: translateY(2px) scale(.97); }
+ .grid-art-link:focus-visible .gpuicn-slider-thumb { transform: translateX(24px); }
+ .grid-art-link:focus-visible .gpuicn-slider-fill { transform: scaleX(1.328767); }
+ .grid-art-link:focus-visible .bonsai-left { transform: rotate(-8deg); }
+ .grid-art-link:focus-visible .bonsai-right { transform: rotate(8deg); }
+ .grid-art-link:focus-visible .anpec-scan { transform: translateY(66px); opacity: 1; }
+ .grid-art-link:focus-visible .anpec-result { opacity: 1; }
+ .grid-art-link:focus-visible .seisei-field-a,.grid-art-link:focus-visible .seisei-field-b,.grid-art-link:focus-visible .seisei-field-c { transform: translateX(10px) rotate(0deg); }
+ .grid-art-link:focus-visible .seisei-result { transform: translateX(0); opacity: 1; }
+ @media (hover: hover) and (pointer: fine) {
+ .grid-artwork:hover .tagflow-source { transform: translateX(-5px) rotate(-3deg); }
+ .grid-artwork:hover .tagflow-heading,.grid-artwork:hover .tagflow-paragraph,.grid-artwork:hover .tagflow-media { transform: translateY(0); opacity: 1; }
+ .grid-artwork:hover .tagflow-heading .art-highlight { opacity: 1; }
+ .grid-artwork:hover .gpuicn-switch { transform: translateX(0); }
+ .grid-artwork:hover .gpuicn-check { opacity: 1; }
+ .grid-artwork:hover .gpuicn-button { transform: translateY(2px) scale(.97); }
+ .grid-artwork:hover .gpuicn-slider-thumb { transform: translateX(24px); }
+ .grid-artwork:hover .gpuicn-slider-fill { transform: scaleX(1.328767); }
+ .grid-artwork:hover .bonsai-left { transform: rotate(-8deg); }
+ .grid-artwork:hover .bonsai-right { transform: rotate(8deg); }
+ .grid-artwork:hover .anpec-scan { transform: translateY(66px); opacity: 1; }
+ .grid-artwork:hover .anpec-result { opacity: 1; }
+ .grid-artwork:hover .seisei-field-a,.grid-artwork:hover .seisei-field-b,.grid-artwork:hover .seisei-field-c { transform: translateX(10px) rotate(0deg); }
+ .grid-artwork:hover .seisei-result { transform: translateX(0); opacity: 1; }
+ }
+}

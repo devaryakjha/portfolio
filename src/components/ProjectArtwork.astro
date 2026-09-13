@@ -4,40 +4,68 @@ const { kind } = Astro.props;
 ---
 <div class:list={['art', 'art-grid', 'grid-artwork', `grid-artwork-${kind}`]} data-artwork={kind} aria-hidden="true">
   {kind === 'oore-build' && <>
-    <div class="oore-route">
-      <svg viewBox="0 0 400 270" fill="none">
-        <circle cx="200" cy="125" r="92" stroke="light-dark(#cdccc8, #393939)" stroke-dasharray="2 7" />
-        <circle cx="200" cy="125" r="71" stroke="light-dark(#deddd9, #242424)" />
-        <path d="M42 200h38l41-41M278 87l33-32h46M271 187l25 26h61" stroke="light-dark(#777, #686868)" />
-        <circle cx="42" cy="200" r="4" fill="light-dark(#292825, #ddd)" />
-        <rect x="350" y="48" width="12" height="12" rx="2" stroke="light-dark(#292825, #ddd)" />
-        <rect x="350" y="207" width="12" height="12" rx="2" stroke="light-dark(#292825, #ddd)" />
-        <g fill="light-dark(#62615d, #8f8f8f)" font-size="9" font-family="monospace"><text x="29" y="225">commit</text><text x="315" y="37">artifact</text><text x="302" y="240">release</text></g>
-      </svg>
-      <img class="oore-original" src="/grid/oore.svg" width="90" height="90" alt="" />
-    </div>
-    <div class="grid-art-caption"><span>Oore CI</span><span>Your Mac → your release</span></div>
+    <svg class="oore-stack" viewBox="0 0 400 270" fill="none">
+      <g class="oore-stack-intro art-motion">
+        <g class="oore-stack-ios">
+          <rect x="107" y="60" width="166" height="126" rx="10" class="oore-paper"/>
+          <text x="123" y="83" class="oore-type">iOS</text>
+          <path d="M125 100h44m-44 8h69" class="oore-rule"/>
+          <text x="123" y="165" class="oore-small">app.ipa</text>
+        </g>
+        <g class="oore-stack-android">
+          <rect x="128" y="68" width="166" height="126" rx="10" class="oore-paper"/>
+          <text x="240" y="91" class="oore-type">Android</text>
+          <path d="M223 108h53m-37 8h37" class="oore-rule"/>
+          <text x="227" y="173" class="oore-small">app.apk</text>
+        </g>
+        <g class="oore-stack-front">
+          <rect x="111" y="88" width="178" height="126" rx="10" class="oore-paper"/>
+          <image href="/grid/oore.svg" x="126" y="102" width="22" height="22" class="oore-mark"/>
+          <text x="158" y="117" class="oore-type">Release ready</text>
+          <path d="M127 137h146" class="oore-rule"/>
+          <g class="oore-small"><text x="127" y="158">Built on your Mac</text><text x="127" y="196">Private team link</text></g>
+          <g class="oore-stamp"><circle cx="261" cy="156" r="12" class="oore-solid"/><path d="m256 156 3.5 3.5 6-7" class="oore-reverse" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <path d="M258 190h13m-5-5 5 5-5 5" class="oore-arrow oore-line" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      </g>
+    </svg>
+    <div class="grid-art-caption"><span>Oore CI</span><span>Build. Sign. Share privately.</span></div>
   </>}
   {kind === 'tagflow' && <>
     <svg class="tagflow-document" viewBox="0 0 400 270" fill="none">
-      <path d="M46 77h106v117H46z" fill="light-dark(#f1f0ed, #101010)" stroke="light-dark(#bbb, #454545)" />
+      <g class="tagflow-source art-piece"><path d="M46 77h106v117H46z" fill="light-dark(#f1f0ed, #101010)" stroke="light-dark(#bbb, #454545)" />
       <path d="M57 63h106v117" stroke="light-dark(#d7d6d2, #2d2d2d)" />
-      <g fill="light-dark(#53524e, #aaa)" font-family="monospace" font-size="11"><text x="62" y="102">&lt;article&gt;</text><text x="69" y="128">&lt;h1&gt;</text><text x="69" y="150">&lt;p&gt;</text><text x="62" y="175">&lt;/article&gt;</text></g>
+      <g fill="light-dark(#53524e, #aaa)" font-family="monospace" font-size="11"><text x="62" y="102">&lt;article&gt;</text><text x="69" y="128">&lt;h1&gt;</text><text x="69" y="150">&lt;p&gt;</text><text x="62" y="175">&lt;/article&gt;</text></g></g>
       <path d="M164 137h38m-5-4 5 4-5 4" stroke="light-dark(#53524e, #aaa)" />
       <rect x="216" y="55" width="139" height="160" rx="5" fill="light-dark(#fff, #1b1b1b)" stroke="light-dark(#777, #666)" />
       <rect x="227" y="67" width="116" height="6" fill="light-dark(#e6e5e1, #292929)" />
-      <text x="231" y="113" fill="light-dark(#292825, #ddd)" font-size="16" font-family="Arial,sans-serif">Hello, Flutter.</text>
-      <path d="M231 130h105M231 140h105M231 150h73" stroke="light-dark(#777, #666)" stroke-width="2" />
-      <rect x="231" y="171" width="30" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" /><rect x="269" y="171" width="67" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" />
+      <g class="tagflow-heading art-piece"><rect x="225" y="89" width="119" height="32" rx="3" class="art-highlight"/><text x="231" y="113" fill="light-dark(#292825, #ddd)" font-size="16" font-family="Arial,sans-serif">Hello, Flutter.</text></g>
+      <g class="tagflow-paragraph art-piece"><path d="M231 130h105M231 140h105M231 150h73" stroke="light-dark(#777, #666)" stroke-width="2" /></g>
+      <g class="tagflow-media art-piece"><rect x="231" y="171" width="30" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" /><rect x="269" y="171" width="67" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" /></g>
     </svg>
     <div class="grid-art-caption"><span class="art-brand"><img src="/grid/tagflow.svg" width="24" height="24" alt="" />Tagflow</span><span>HTML → native widgets</span></div>
   </>}
   {kind === 'bonsai' && <>
-    <div class="bonsai-topology">
-      <div class="bonsai-lanes"><span>feature</span><span>main</span><span>worktree</span></div>
-      <img src="/grid/bonsai.svg" width="205" height="205" alt="" />
-      <span class="bonsai-root">One repository. Room to branch.</span>
-    </div>
+    <svg class="bonsai-branches" viewBox="0 0 400 270" fill="none">
+      <g class="bonsai-left art-piece">
+        <path d="M200 207v-32q0-29-38-29h-46v-34" class="art-wire"/>
+        <rect x="65" y="58" width="102" height="57" rx="6" class="art-paper"/>
+        <text x="78" y="80" class="art-type">feature</text><path d="M78 96h47" class="art-wire"/>
+        <circle cx="145" cy="96" r="3" class="art-ink"/>
+      </g>
+      <g class="bonsai-right art-piece">
+        <path d="M200 207v-32q0-29 38-29h46v-34" class="art-wire"/>
+        <rect x="233" y="58" width="102" height="57" rx="6" class="art-paper"/>
+        <text x="246" y="80" class="art-type">worktree</text><path d="M246 96h47" class="art-wire"/>
+        <circle cx="313" cy="96" r="3" class="art-ink"/>
+      </g>
+      <path d="M200 207v-59" class="art-wire"/>
+      <g class="bonsai-main art-piece"><rect x="149" y="94" width="102" height="57" rx="6" class="art-paper"/>
+        <text x="163" y="117" class="art-type">main</text><path d="M163 134h47" class="art-wire"/><circle cx="229" cy="134" r="3" class="art-ink"/>
+      </g>
+      <circle cx="200" cy="207" r="7" class="art-paper"/><circle cx="200" cy="207" r="2" class="art-ink"/>
+      <text x="200" y="234" text-anchor="middle" class="art-small">One repository. Room to branch.</text>
+    </svg>
     <div class="grid-art-caption"><span>Bonsai</span><span>Native Git for macOS</span></div>
   </>}
   {kind === 'gpuicn' && <>
@@ -46,17 +74,17 @@ const { kind } = Astro.props;
       <path d="M48 69h304" stroke="light-dark(#cdccc8, #393939)" />
       <g fill="light-dark(#777, #666)"><circle cx="62" cy="55" r="3" /><circle cx="74" cy="55" r="3" /><circle cx="86" cy="55" r="3" /></g>
       <text x="332" y="58" text-anchor="end" fill="light-dark(#62615d, #888)" font-family="monospace" font-size="9">components.rs</text>
-      <rect x="69" y="90" width="119" height="33" rx="5" fill="light-dark(#292825, #ddd)" />
-      <text x="128" y="111" text-anchor="middle" fill="light-dark(#faf9f6, #141414)" font-family="monospace" font-size="11">Button</text>
+      <g class="gpuicn-button art-piece"><rect x="69" y="90" width="119" height="33" rx="5" fill="light-dark(#292825, #ddd)" />
+      <text x="128" y="111" text-anchor="middle" fill="light-dark(#faf9f6, #141414)" font-family="monospace" font-size="11">Button</text></g>
       <rect x="209" y="94" width="40" height="23" rx="12" fill="light-dark(#53524e, #aaa)" />
-      <circle cx="237" cy="105.5" r="8" fill="light-dark(#faf9f6, #141414)" />
+      <circle class="gpuicn-switch art-piece" cx="237" cy="105.5" r="8" fill="light-dark(#faf9f6, #141414)" />
       <rect x="272" y="96" width="19" height="19" rx="3" stroke="light-dark(#53524e, #aaa)" />
-      <path d="m276 105 4 4 7-8" stroke="light-dark(#292825, #ddd)" />
+      <path class="gpuicn-check art-piece" d="m276 105 4 4 7-8" stroke="light-dark(#292825, #ddd)" />
       <rect x="69" y="140" width="262" height="29" rx="4" stroke="light-dark(#a3a29e, #555)" />
       <text x="81" y="159" fill="light-dark(#62615d, #888)" font-family="monospace" font-size="10">Make it your own</text>
       <path d="M69 198h119" stroke="light-dark(#c1c0bc, #444)" stroke-width="3" stroke-linecap="round" />
-      <path d="M69 198h73" stroke="light-dark(#41403d, #bbb)" stroke-width="3" stroke-linecap="round" />
-      <circle cx="142" cy="198" r="6" fill="light-dark(#292825, #ddd)" />
+      <path class="gpuicn-slider-fill art-piece" d="M69 198h73" stroke="light-dark(#41403d, #bbb)" stroke-width="3" stroke-linecap="round" />
+      <circle class="gpuicn-slider-thumb art-piece" cx="142" cy="198" r="6" fill="light-dark(#292825, #ddd)" />
       <rect x="209" y="185" width="122" height="25" rx="4" stroke="light-dark(#a3a29e, #555)" />
       <text x="270" y="201" text-anchor="middle" fill="light-dark(#53524e, #aaa)" font-family="monospace" font-size="10">Rust / GPUI</text>
     </svg>
@@ -69,6 +97,9 @@ const { kind } = Astro.props;
       <path d="M110 43h29M111 218h28" stroke="light-dark(#777, #666)" stroke-linecap="round" />
       <rect x="102" y="99" width="46" height="49" rx="2" stroke="light-dark(#41403d, #bbb)" /><rect x="111" y="108" width="28" height="31" stroke="light-dark(#a3a29e, #555)" />
       {[0,1,2,3].map(i=><g stroke="light-dark(#686763, #777)"><path d={`M${111+i*9} 91v8M${111+i*9} 148v8M94 ${108+i*10}h8M148 ${108+i*10}h8`} /></g>)}
+      <path class="anpec-scan art-piece" d="M91 91h67" stroke="light-dark(#41403d,#ddd)" stroke-width="2"/>
+      <text x="124" y="190" text-anchor="middle" class="art-small">classify()</text>
+      <rect class="anpec-result art-piece art-highlight" x="233" y="161" width="87" height="46" rx="5"/>
       <path d="M181 126h30m0-59v117M211 67h21M211 125h21M211 184h21" stroke="light-dark(#a3a29e, #505050)" />
       <g font-size="10" font-family="monospace" fill="light-dark(#53524e, #aaa)"><text x="242" y="60">low</text><text x="242" y="118">average</text><text x="242" y="177">high</text></g>
       <g fill="light-dark(#686763, #777)"><rect x="242" y="72" width="19" height="10" /><rect x="242" y="130" width="19" height="10" /><rect x="266" y="130" width="19" height="10" /><rect x="242" y="189" width="19" height="10" /><rect x="266" y="189" width="19" height="10" /><rect x="290" y="189" width="19" height="10" /></g>
@@ -77,16 +108,24 @@ const { kind } = Astro.props;
   </>}
   {kind === 'seisei' && <>
     <svg class="seisei-contract" viewBox="0 0 400 270" fill="none">
-      <g stroke="light-dark(#c1c0bc, #444)"><path d="M34 87h32l25 25h36M38 155h34l19-20h36M44 189h25l40-41h18"/><circle cx="31" cy="87" r="3"/><circle cx="35" cy="155" r="3"/><circle cx="41" cy="189" r="3"/></g>
+      <g class="art-small">
+        <g class="seisei-field-a art-piece"><rect x="25" y="90" width="84" height="25" rx="3" class="art-paper"/><text x="34" y="106">name: ...</text></g>
+        <g class="seisei-field-b art-piece"><rect x="25" y="121" width="84" height="25" rx="3" class="art-paper"/><text x="34" y="137">id: ...</text></g>
+        <g class="seisei-field-c art-piece"><rect x="25" y="152" width="84" height="25" rx="3" class="art-paper"/><text x="34" y="168">tags: ...</text></g>
+      </g>
       <rect x="127" y="65" width="113" height="131" rx="3" fill="light-dark(#faf9f6, #151515)" stroke="light-dark(#686763, #777)" />
       <path d="M141 55h111v131" stroke="light-dark(#d3d2ce, #333)" />
       <text x="144" y="145" fill="light-dark(#292825, #ddd)" font-size="46" font-family="monospace" letter-spacing="-7">{'{T}'}</text>
       <text x="144" y="182" fill="light-dark(#686763, #777)" font-size="9" font-family="monospace">schema</text>
       <path d="M241 130h35m-5-4 5 4-5 4" stroke="light-dark(#5f5e5a, #999)" />
-      <rect x="287" y="99" width="77" height="62" rx="3" stroke="light-dark(#62615d, #888)" />
-      <path d="m300 122 5 5 9-11M320 122h29M300 141h49" stroke="light-dark(#53524e, #aaa)" />
+      <g class="seisei-result art-piece"><rect x="287" y="99" width="77" height="62" rx="3" stroke="light-dark(#62615d, #888)" />
+      <path d="m300 122 5 5 9-11M320 122h29M300 141h49" stroke="light-dark(#53524e, #aaa)" /></g>
       <g font-size="9" font-family="monospace" fill="light-dark(#62615d, #888)"><text x="26" y="221">model output</text><text x="288" y="183">typed data</text></g>
     </svg>
     <div class="grid-art-caption"><span>Seisei</span><span>A contract for AI output.</span></div>
   </>}
 </div>
+
+<script>
+  import '../scripts/artwork-motion.js';
+</script>
