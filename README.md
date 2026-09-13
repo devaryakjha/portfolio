@@ -51,3 +51,18 @@ make deploy PROJECT=<pages-project-name>
 # optional preview branch deploy
 make deploy PROJECT=<pages-project-name> BRANCH=<branch-name>
 ```
+
+## GitHub contribution snapshot
+
+`make refresh-contributions` fetches the current 26-week calendar for `devaryakjha`
+into `public/github-contributions.json`. Requires an authenticated `gh` CLI
+(`gh auth login`, or `GH_TOKEN` in CI). Only dates, aggregate counts, and intensity
+levels are saved; no credentials or repository details enter the site.
+
+`make deploy` refreshes this snapshot before building and stops if the refresh
+fails. Ordinary builds stay offline and use the saved snapshot. This is a
+deployment-time snapshot, not a live feed.
+
+The home page renders the snapshot at build time, including three recent public
+commits from GitHub search. Commit search can lag behind new pushes. Run
+`bun run dev` to preview the real section; `prototypes/` is not published.

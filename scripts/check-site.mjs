@@ -84,6 +84,15 @@ assert.equal(new Set([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1]
   visibilityChange();
   assert.equal(artwork.running, false, 'Offscreen artwork stays paused on tab changes');
 }
+// The published workbench must render real snapshot values and commit links.
+const activity = JSON.parse(fs.readFileSync(path.join(root, 'github-contributions.json'), 'utf8'));
+assert.equal((home.match(/data-detail=/g) || []).length, activity.days.length);
+assert.ok(home.includes('id="workbench"') && !home.includes('illustrative'));
+for (const day of activity.days) {
+  const date = new Date(day.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  assert.ok(home.replaceAll("Sept", "Sep").includes(`data-detail="${date.replace("Sept", "Sep")} · ${day.count} contribution${day.count === 1 ? '' : 's'}"`));
+}
+for (const commit of activity.commits) assert.ok(home.includes(`href="${commit.url}"`));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
 assert.ok(!sitemap.includes('/explore/'), 'No preview URLs in sitemap');
 console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and six project artworks.`);
