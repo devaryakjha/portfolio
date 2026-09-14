@@ -7,7 +7,7 @@ import vm from 'node:vm';
 // Run after bun run build.
 const root = path.resolve('dist');
 const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('.html'));
-assert.equal(pages.length, 11, 'Home, six projects, writing, two posts, and 404');
+assert.equal(pages.length, 12, 'Home, about, six projects, writing, two posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
 for (const page of pages) {
@@ -21,6 +21,7 @@ for (const page of pages) {
   assert.ok(html.includes('property="og:image:alt"') && html.includes('name="twitter:image:alt"'), `${page}: image descriptions`);
   socialImages.add(path.join(root, new URL(og).pathname));
   assert.ok(!/noindex|\/explore\/|Compare designs|theme\.js/.test(html), `${page}: final presentation`);
+  assert.ok(!/linkedin/i.test(html), `${page}: deleted LinkedIn profile is not referenced`);
   for (const [, url] of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const target = path.join(root, url);
     assert.ok(fs.existsSync(target) || fs.existsSync(path.join(target, 'index.html')), `${page}: missing ${url}`);
@@ -33,6 +34,21 @@ for (const image of socialImages) {
 const icon = await sharp(path.join(root, 'apple-touch-icon.png')).metadata();
 assert.deepEqual([icon.width, icon.height], [180, 180], 'Home-screen icon dimensions');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+// Profile and article markup must describe the same person and resolve to the canonical domain.
+const readSchema = html => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] ?? 'null');
+assert.equal(readSchema(home)['@type'], 'WebSite');
+const about = fs.readFileSync(path.join(root, 'about/index.html'), 'utf8');
+const profile = readSchema(about);
+assert.equal(profile['@type'], 'ProfilePage');
+assert.equal(profile.mainEntity.name, 'Aryakumar Jha');
+assert.deepEqual(profile.mainEntity.alternateName, ['Arya Jha', 'Arya Kumar Jha', 'devaryakjha']);
+assert.equal(profile.mainEntity.url, 'https://aryak.dev/about');
+for (const page of pages.filter(p => /^blog\/.+\/index.html$/.test(p))) {
+  const schema = readSchema(fs.readFileSync(path.join(root, page), 'utf8'));
+  assert.equal(schema['@type'], 'BlogPosting');
+  assert.equal(schema.author['@id'], profile.mainEntity['@id']);
+}
+assert.ok(fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8').includes('https://aryak.dev/about'));
 // Exercise the real theme script with system preferences and unavailable storage.
 const themeScript = fs.readFileSync('src/scripts/theme.js', 'utf8');
 for (const [saved, dark, blocked, expected] of [[null, false, false, 'light'], [null, true, false, 'dark'], ['light', true, false, 'light'], ['dark', false, false, 'dark'], ['invalid', false, false, 'light'], [null, true, true, 'dark']]) {

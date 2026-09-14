@@ -1,17 +1,27 @@
 ---
 import '../styles/site.css';
 import themeScript from '../scripts/theme.js?raw';
-import { site } from '../data/site';
-type Props = { title?: string; description?: string; ogType?: 'website' | 'article'; ogImage?: string; imageAlt?: string };
-const { title = 'Aryakumar Jha — Software Engineer', description = site.description, ogType = 'website', ogImage = '/og.png', imageAlt = title } = Astro.props;
+import { site, person } from '../data/site';
+type Props = { title?: string; description?: string; ogType?: 'website' | 'article'; ogImage?: string; imageAlt?: string; structuredData?: Record<string, unknown> };
+const { title = 'Aryakumar Jha — Software Engineer', description = site.description, ogType = 'website', ogImage = '/og.png', imageAlt = title, structuredData } = Astro.props;
 const socialImage = new URL(ogImage, site.url);
 const canonical = new URL(Astro.url.pathname, site.url);
+const schema = structuredData ?? (Astro.url.pathname === '/' ? {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${site.url}/#website`,
+  url: `${site.url}/`,
+  name: site.name,
+  alternateName: 'aryak.dev',
+  author: person,
+} : undefined);
 ---
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content={description} />
+  {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />}
   <link rel="canonical" href={canonical} />
   <meta name="theme-color" content="#faf9f6" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
@@ -38,9 +48,9 @@ const canonical = new URL(Astro.url.pathname, site.url);
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="identity" href="/" aria-label="Aryakumar Jha, home"><span class="monogram" aria-hidden="true">aj</span><span class="identity-name">Aryakumar Jha</span></a>
-    <nav aria-label="Portfolio"><a href="/#work">Work</a><a href="/blog">Writing</a><a href="/#about">About</a><a class="header-email" href="mailto:me@aryak.dev">Let’s talk <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" aria-label="Switch color theme" hidden><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg></button></nav>
+    <nav aria-label="Portfolio"><a href="/#work">Work</a><a href="/blog">Writing</a><a href="/about">About</a><a class="header-email" href="mailto:me@aryak.dev">Let’s talk <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" aria-label="Switch color theme" hidden><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" /><path d="M10 3a7 7 0 0 1 0 14Z" fill="currentColor" /></svg></button></nav>
   </header>
   <main id="main"><slot /></main>
-  <footer class="site-footer"><a class="footer-email" href="mailto:me@aryak.dev">Have a thought?<br /><span>Say hello.</span></a><div><p>Thanks for spending a little time here.</p><a href="https://github.com/devaryakjha">GitHub ↗</a><a href="https://www.linkedin.com/in/devaryakjha">LinkedIn ↗</a><p class="copyright">© {new Date().getFullYear()} Aryakumar Jha · Bangalore, India</p></div></footer>
+  <footer class="site-footer"><a class="footer-email" href="mailto:me@aryak.dev">Have a thought?<br /><span>Say hello.</span></a><div><p>Thanks for spending a little time here.</p><a href="https://github.com/devaryakjha">GitHub ↗</a><p class="copyright">© {new Date().getFullYear()} Aryakumar Jha · Bangalore, India</p></div></footer>
 </body>
 </html>

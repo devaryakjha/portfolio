@@ -1,9 +1,20 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getAllPosts } from '../../utils/blog';
+import { site, person } from '../../data/site';
 import { formatDate } from '../../utils/date';
 export function getStaticPaths() { return getAllPosts().map(post=>({params:{slug:post.slug},props:{post}})); }
 const { post } = Astro.props;
 const Content = post.Content;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.frontmatter.title,
+  description: post.frontmatter.excerpt,
+  datePublished: post.frontmatter.date,
+  url: `${site.url}/blog/${post.slug}`,
+  image: `${site.url}/blog/${post.slug}/og.png`,
+  author: person,
+};
 ---
-<SiteLayout ogType="article" ogImage={`/blog/${post.slug}/og.png`} description={post.frontmatter.excerpt} title={`${post.frontmatter.title} — Aryakumar Jha`}><article class="reading-page"><header class="reading-header"><a class="back" href="/blog">← All writing</a><div class="reading-meta"><span>Aryakumar Jha</span><time datetime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time></div><h1>{post.frontmatter.title}</h1></header><div class="reading-body"><Content /></div><footer class="reading-end"><p>Thanks for reading.</p><a href="mailto:me@aryak.dev">Have a thought? Send me a note ↗</a></footer></article></SiteLayout>
+<SiteLayout structuredData={structuredData} ogType="article" ogImage={`/blog/${post.slug}/og.png`} description={post.frontmatter.excerpt} title={`${post.frontmatter.title} — Aryakumar Jha`}><article class="reading-page"><header class="reading-header"><a class="back" href="/blog">← All writing</a><div class="reading-meta"><a href="/about" rel="author">Aryakumar Jha</a><time datetime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time></div><h1>{post.frontmatter.title}</h1></header><div class="reading-body"><Content /></div><footer class="reading-end"><p>Thanks for reading.</p><a href="mailto:me@aryak.dev">Have a thought? Send me a note ↗</a></footer></article></SiteLayout>

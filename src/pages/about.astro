@@ -1,0 +1,53 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { site, person } from '../data/site';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': `${site.url}/about#profile`,
+  url: `${site.url}/about`,
+  name: 'About Aryakumar Jha',
+  mainEntity: person,
+};
+---
+<SiteLayout title="About Aryakumar Jha — Software Engineer at Zerodha" description="Meet Aryakumar Jha, also known as Arya Jha: a Bangalore-based software engineer at Zerodha, building open-source tools with Flutter, Dart, and Rust." structuredData={structuredData}>
+  <article class="about-page">
+    <header>
+      <p class="small-label">A little about me</p>
+      <h1>Aryakumar Jha.</h1>
+      <p class="about-intro">Software engineer at Zerodha.<br />Based in Bangalore, India.</p>
+    </header>
+    <div class="about-content">
+      <section>
+        <h2>You can call me Arya.</h2>
+        <p>I also go by Arya Jha. My full name is Aryakumar Jha, sometimes written as Arya Kumar Jha. Online, I’m <a href="https://github.com/devaryakjha" rel="me">devaryakjha</a>.</p>
+        <p>Most of my work is in Flutter and Dart, with a growing interest in Rust and Go. I like understanding how things work, then finding a simpler way to put them together.</p>
+      </section>
+      <section>
+        <h2>What I’m building.</h2>
+        <p>Outside work, I build open-source tools for problems I keep running into. <a href="/projects/oore-build">Oore CI</a> grew out of my own mobile release workflow. <a href="/projects/tagflow">Tagflow</a> explores native rich content in Flutter.</p>
+        <p>I’m also working on <a href="/projects/gpuicn">gpuicn</a>, UI components for Rust and GPUI, and <a href="/projects/bonsai">Bonsai</a>, a native Git client for macOS.</p>
+        <a class="about-link" href="/#work">Explore all projects ↗</a>
+      </section>
+      <section>
+        <h2>Notes along the way.</h2>
+        <p>I write about the things I’m building and what I learn while working on them.</p>
+        <a class="about-link" href="/blog">Read my writing ↗</a>
+      </section>
+      <section>
+        <h2>Find me elsewhere.</h2>
+        <p><a href="https://github.com/devaryakjha" rel="me">GitHub</a> · <a href="mailto:me@aryak.dev">me@aryak.dev</a></p>
+      </section>
+    </div>
+  </article>
+</SiteLayout>
+<style>
+  .about-page { margin:65px 4.5% 90px; }
+  h1 { font-size:clamp(46px,8vw,105px); letter-spacing:-.065em; font-weight:500; line-height:1.08; margin:27px 0; }
+  .about-intro { color:light-dark(#53524e,#aaa); font-size:20px; line-height:1.6; }
+  .about-content { border-top:1px solid light-dark(#d3d2ce,#333); margin-top:55px; display:grid; grid-template-columns:1fr 1fr; gap:45px 10%; padding-top:40px; }
+  h2 { font-weight:500; font-size:26px; letter-spacing:-.7px; margin-bottom:18px; }
+  section p { font-size:15px; line-height:1.85; color:light-dark(#53524e,#aaa); margin-bottom:18px; }
+  .about-link { font:11px 'Courier New',monospace; }
+  @media(max-width:700px) { .about-page { margin:45px 22px 65px; } .about-content { grid-template-columns:1fr; gap:32px; } }
+</style>

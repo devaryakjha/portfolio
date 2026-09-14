@@ -1,3 +1,8 @@
+https://aryakumarjha.com/* https://aryak.dev/:splat 301
+https://www.aryakumarjha.com/* https://aryak.dev/:splat 301
+
+/sitemap.xml /sitemap-index.xml 301
+
 /shrtm https://url-shortener-devaryakjha.vercel.app/ 301
 /shrtm/* https://url-shortener-devaryakjha.vercel.app/:splat 301
 /collaborate-tube https://collaborate-tube-backend.vercel.app/ 301
