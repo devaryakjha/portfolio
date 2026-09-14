@@ -22,6 +22,7 @@ const structuredData = {
         <h2>You can call me Arya.</h2>
         <p>I also go by Arya Jha. My full name is Aryakumar Jha, sometimes written as Arya Kumar Jha. Online, I’m <a href="https://github.com/devaryakjha" rel="me">devaryakjha</a>.</p>
         <p>Most of my work is in Flutter and Dart, with a growing interest in Rust and Go. I like understanding how things work, then finding a simpler way to put them together.</p>
+        <p>Outside of all this, I’m building a life with <a class="anjali-link" href="https://uxbyanjali.com"><img class="anjali-icon" src="/anjali-favicon.png" width="16" height="16" alt="" />Anjali<span class="love" aria-hidden="true">♥</span></a>, my partner and soon-to-be wife. She’s a designer, and you should see her work.</p>
       </section>
       <section>
         <h2>What I’m building.</h2>
@@ -48,6 +49,19 @@ const structuredData = {
   .about-content { border-top:1px solid light-dark(#d3d2ce,#333); margin-top:55px; display:grid; grid-template-columns:1fr 1fr; gap:45px 10%; padding-top:40px; }
   h2 { font-weight:500; font-size:26px; letter-spacing:-.7px; margin-bottom:18px; }
   section p { font-size:15px; line-height:1.85; color:light-dark(#53524e,#aaa); margin-bottom:18px; }
+  .anjali-link { white-space: nowrap; color: light-dark(#a34759, #dc8c9c); }
+  .anjali-icon { display: inline-block; width: 16px; height: 16px; margin-right: .3em; vertical-align: -.15em; }
+  .love { display: inline-block; margin-left: .3em; color: inherit; font-size: 1.15em; transform-origin: center; }
+  @keyframes heartbeat {
+    0%, 40%, 100% { transform: scale(1); }
+    20%, 65% { transform: scale(1.18); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .anjali-link:focus-visible .love { animation: heartbeat 900ms ease-in-out infinite; }
+    @media (hover: hover) and (pointer: fine) {
+      .anjali-link:hover .love { animation: heartbeat 900ms ease-in-out infinite; }
+    }
+  }
   .about-link { font:11px 'Courier New',monospace; }
   @media(max-width:700px) { .about-page { margin:45px 22px 65px; } .about-content { grid-template-columns:1fr; gap:32px; } }
 </style>
