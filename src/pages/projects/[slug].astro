@@ -2,7 +2,9 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { work } from '../../data/work';
 import Artwork from '../../components/ProjectArtwork.astro';
+import ProjectWalkthrough from '../../components/ProjectWalkthrough.astro';
+import OoreWalkthrough from '../../components/OoreWalkthrough.astro';
 export function getStaticPaths() { return work.map(project=>({params:{slug:project.slug},props:{project}})); }
 const { project: p } = Astro.props;
 ---
-<SiteLayout ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a></div></header><Artwork kind={p.slug} /><div class="case-body"><p class="case-intro">{p.description}</p><section><h2>The problem</h2><p>{p.problem}</p></section><section><h2>The approach</h2><p>{p.solution}</p></section><section><h2>A closer look</h2><ul>{p.highlights.map(h=><li>{h}</li>)}</ul></section></div></article></SiteLayout>
+<SiteLayout ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a></div></header><Artwork kind={p.slug} />{p.slug === 'oore-build' ? <OoreWalkthrough /> : <ProjectWalkthrough project={p} />}</article></SiteLayout>

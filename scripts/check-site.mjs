@@ -10,6 +10,10 @@ const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('
 assert.equal(pages.length, 12, 'Home, about, six projects, writing, two posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
+for (const slug of ['oore-build', 'tagflow', 'gpuicn', 'bonsai', 'anpec', 'seisei']) {
+  const html = fs.readFileSync(path.join(root, 'projects', slug, 'index.html'), 'utf8');
+  assert.equal((html.match(/<figcaption(?:\s|>)/g) || []).length, 2, `${slug}: two labeled walkthrough examples`);
+}
 for (const page of pages) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1, `${page}: one heading`);

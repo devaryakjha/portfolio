@@ -2,7 +2,7 @@
   "username": "devaryakjha",
   "from": "2026-03-23",
   "to": "2026-09-14",
-  "updatedAt": "2026-09-14T05:31:57.344Z",
+  "updatedAt": "2026-09-14T08:41:45.600Z",
   "days": [
     {
       "date": "2026-03-23",
@@ -861,48 +861,48 @@
     },
     {
       "date": "2026-09-10",
-      "count": 28,
-      "level": 1
+      "count": 63,
+      "level": 2
     },
     {
       "date": "2026-09-11",
-      "count": 6,
+      "count": 22,
       "level": 1
     },
     {
       "date": "2026-09-12",
-      "count": 18,
-      "level": 1
+      "count": 41,
+      "level": 2
     },
     {
       "date": "2026-09-13",
-      "count": 3,
+      "count": 11,
       "level": 1
     },
     {
       "date": "2026-09-14",
-      "count": 0,
-      "level": 0
+      "count": 31,
+      "level": 1
     }
   ],
   "commits": [
     {
-      "repo": "devaryakjha/gpuicn",
-      "title": "fix: simplify focus borders and render platform notes",
-      "url": "https://github.com/devaryakjha/gpuicn/commit/d5d51a46b0cc1e05ab7a1c73eaf6611985bdd70b",
-      "date": "2026-09-10T21:44:25.000+05:30"
+      "repo": "chibi-app/manga-api",
+      "title": "chore: remove test suite and validation scripts",
+      "url": "https://github.com/chibi-app/manga-api/commit/fdf807c5a87632d0d7a7834485f844bc3faa587a",
+      "date": "2026-09-14T13:54:37.000+05:30"
     },
     {
-      "repo": "devaryakjha/gpuicn",
-      "title": "fix(sidebar): restore trigger spacing and prepare beta.2 (#56)",
-      "url": "https://github.com/devaryakjha/gpuicn/commit/792e35b723bb2045d51053365edbcc663b4c9f78",
-      "date": "2026-09-10T16:36:53.000+05:30"
+      "repo": "chibi-app/manga-api",
+      "title": "chore(ci): remove GitHub Actions workflow",
+      "url": "https://github.com/chibi-app/manga-api/commit/a047de0cb0343599119f0dfeb941a3a623073b72",
+      "date": "2026-09-14T13:39:50.000+05:30"
     },
     {
-      "repo": "devaryakjha/gpuicn",
-      "title": "feat(gpui)!: adopt GPUI Kit, update icons and refine components (#55)",
-      "url": "https://github.com/devaryakjha/gpuicn/commit/cc26de06a1f925aab87f4d46f8294f1d94f8666f",
-      "date": "2026-09-10T16:14:26.000+05:30"
+      "repo": "chibi-app/manga-api",
+      "title": "chore: merge remaining chibi branches",
+      "url": "https://github.com/chibi-app/manga-api/commit/f909a110a74270ef51d4ffabc565536181820e08",
+      "date": "2026-09-14T13:36:18.000+05:30"
     }
   ]
 }
