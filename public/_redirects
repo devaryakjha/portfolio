@@ -1,5 +1,5 @@
-https://aryakumarjha.com/* https://aryak.dev/:splat 301
-https://www.aryakumarjha.com/* https://aryak.dev/:splat 301
+# Domain redirects are managed by the Cloudflare Single Redirect
+# "Canonical portfolio domain" on aryakumarjha.com; Pages cannot match hosts.
 
 /sitemap.xml /sitemap-index.xml 301
 
