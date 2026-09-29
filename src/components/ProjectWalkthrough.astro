@@ -44,7 +44,11 @@ const stories: Record<string, { intro: string; steps: { title: string; text: str
 };
 const story = stories[project.slug];
 ---
-<section class="project-story" aria-label={`Inside ${project.name}`}>
+{!story ? <section class="project-story" aria-label={`Inside ${project.name}`}>
+  <div class="intro"><p class="small-label">ABOUT THE PROJECT</p><h2>A little more about {project.name}.</h2><p>{project.description}</p></div>
+  <div class="ending"><h2>The problem.</h2><p>{project.problem}</p></div>
+  <div class="ending"><h2>The approach.</h2><p>{project.solution}</p><ul>{project.highlights.map((highlight: string) => <li>{highlight}</li>)}</ul><a class="grid-button" href={project.href}>Explore {project.name} ↗</a><a class="source" href={project.source}>Read the source ↗</a></div>
+</section> : <section class="project-story" aria-label={`Inside ${project.name}`}>
   <div class="intro"><p class="small-label">ABOUT THE PROJECT</p><h2>A little more about {project.name}.</h2><p>{story.intro}</p></div>
   {story.steps.map((step, i) => <figure>
     <figcaption><p class="small-label">0{i + 1} / {project.name}</p><h2>{step.title}</h2><p>{step.text}</p></figcaption>
@@ -55,7 +59,7 @@ const story = stories[project.slug];
     <p class="note">{step.note}</p>
   </figure>)}
   <div class="ending"><h2>Where things stand.</h2><p>{story.closing}</p><a class="grid-button" href={project.href}>Explore {project.name} ↗</a><a class="source" href={project.source}>Read the source ↗</a></div>
-</section>
+</section>}
 <style>
   .project-story { margin: 60px 0; }
   .intro { max-width: 680px; margin: 65px auto; }

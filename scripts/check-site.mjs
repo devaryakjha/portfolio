@@ -7,10 +7,12 @@ import vm from 'node:vm';
 // Run after bun run build.
 const root = path.resolve('dist');
 const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('.html'));
-assert.equal(pages.length, 12, 'Home, about, six projects, writing, two posts, and 404');
+const work = JSON.parse(fs.readFileSync('src/data/work.snapshot.json', 'utf8'));
+assert.equal(pages.length, 6 + work.length, 'Home, about, projects, writing, two posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
 for (const slug of ['oore-build', 'tagflow', 'gpuicn', 'bonsai', 'anpec', 'seisei']) {
+  if (!work.some(project => project.slug === slug)) continue;
   const html = fs.readFileSync(path.join(root, 'projects', slug, 'index.html'), 'utf8');
   assert.equal((html.match(/<figcaption(?:\s|>)/g) || []).length, 2, `${slug}: two labeled walkthrough examples`);
 }
@@ -83,7 +85,7 @@ for (const [saved, dark, blocked, expected] of [[null, false, false, 'light'], [
   system.change();
   assert.equal(root.dataset.theme, next, 'Explicit choice overrides system changes');
 }
-assert.equal(new Set([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1])).size, 6, 'Six distinct project artworks');
+assert.deepEqual([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1]), work.map(p => p.slug), 'Project artwork order matches published content');
 // Verify loops stop offscreen and while the tab is hidden, then resume together.
 {
   let intersect, visibilityChange;
@@ -115,4 +117,4 @@ for (const day of activity.days) {
 for (const commit of activity.commits) assert.ok(home.includes(`href="${commit.url}"`));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
 assert.ok(!sitemap.includes('/explore/'), 'No preview URLs in sitemap');
-console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and six project artworks.`);
+console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and ${work.length} project artworks.`);

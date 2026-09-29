@@ -1,8 +1,16 @@
 ---
-type Props = { kind: string };
-const { kind } = Astro.props;
+type Props = { kind: string; name?: string };
+const { kind, name = kind } = Astro.props;
+const custom = !['oore-build', 'tagflow', 'bonsai', 'gpuicn', 'anpec', 'seisei'].includes(kind);
 ---
 <div class:list={['art', 'art-grid', 'grid-artwork', `grid-artwork-${kind}`]} data-artwork={kind} aria-hidden="true">
+  {custom && <>
+    <svg viewBox="0 0 400 270" fill="none">
+      <rect x="58" y="55" width="284" height="160" rx="6" class="art-paper" />
+      <path d="M58 91h284M78 74h12m10 0h12m10 0h12M88 125h178M88 150h221M88 175h145" class="art-wire" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <div class="grid-art-caption"><span>{name}</span><span>Project</span></div>
+  </>}
   {kind === 'oore-build' && <>
     <svg class="oore-stack" viewBox="0 0 400 270" fill="none">
       <g class="oore-stack-intro art-motion">
