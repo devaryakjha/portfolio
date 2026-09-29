@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "aryakdev-cms",
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "cms.aryak.dev", "custom_domain": true }],
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-09-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [{ "binding": "DB", "database_name": "aryakdev-cms", "database_id": "dc716d19-779a-4c4c-bf0c-170e84deb38f" }],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "aryakdev-cms-media" }],
+  "triggers": { "crons": ["* * * * *"] }
+}

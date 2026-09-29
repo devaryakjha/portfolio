@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.emdash/
+.wrangler/
+.env
+.env.*
+!.env.example
+emdash-env.d.ts
+worker-configuration.d.ts
+*.tsbuildinfo

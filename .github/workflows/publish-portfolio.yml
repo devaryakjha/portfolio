@@ -1,0 +1,67 @@
+name: Publish portfolio
+
+on:
+  push:
+    branches: [main, 'codex/**']
+  schedule:
+    - cron: '*/15 * * * *'
+    - cron: '7 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      EMDASH_URL: ${{ vars.EMDASH_URL }}
+      EMDASH_TOKEN: ${{ secrets.EMDASH_TOKEN }}
+      CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+      CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Sync published projects
+        if: env.EMDASH_URL != '' && env.EMDASH_TOKEN != ''
+        run: bun scripts/sync-emdash-projects.mjs
+      - name: Refresh GitHub activity
+        if: github.event_name != 'schedule' || github.event.schedule == '7 0 * * *'
+        env:
+          GH_TOKEN: ${{ secrets.PORTFOLIO_GH_TOKEN || github.token }}
+        run: bun scripts/refresh-contributions.mjs
+      - name: Keep the deployed GitHub snapshot between daily refreshes
+        if: github.event_name == 'schedule' && github.event.schedule != '7 0 * * *'
+        run: curl --fail --silent --show-error --retry 3 https://aryak.dev/github-contributions.json --output public/github-contributions.json
+      - name: Check whether this snapshot was published
+        id: published
+        uses: actions/cache/restore@v4
+        with:
+          path: .deployment-marker
+          key: portfolio-${{ github.sha }}-${{ hashFiles('src/data/work.snapshot.json', 'public/github-contributions.json') }}
+      - name: Build and check static site
+        if: github.event_name == 'workflow_dispatch' || steps.published.outputs.cache-hit != 'true'
+        run: |
+          bun run build
+          bun scripts/check-site.mjs
+          bunx tsc --noEmit
+      - name: Publish static files to Pages
+        if: github.event_name == 'workflow_dispatch' || steps.published.outputs.cache-hit != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DEPLOYMENT_BRANCH: ${{ github.ref_name }}
+        run: bunx wrangler@4.143.1 pages deploy dist --project-name portfolio --branch "$DEPLOYMENT_BRANCH"
+      - name: Remember published snapshot
+        if: steps.published.outputs.cache-hit != 'true'
+        run: touch .deployment-marker
+      - uses: actions/cache/save@v4
+        if: steps.published.outputs.cache-hit != 'true'
+        with:
+          path: .deployment-marker
+          key: portfolio-${{ github.sha }}-${{ hashFiles('src/data/work.snapshot.json', 'public/github-contributions.json') }}

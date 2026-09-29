@@ -7,9 +7,15 @@ import vm from 'node:vm';
 // Run after bun run build.
 const root = path.resolve('dist');
 const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('.html'));
-assert.equal(pages.length, 11, 'Home, six projects, writing, two posts, and 404');
+const work = JSON.parse(fs.readFileSync('src/data/work.snapshot.json', 'utf8'));
+assert.equal(pages.length, 6 + work.length, 'Home, about, projects, writing, two posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
+for (const slug of ['oore-build', 'tagflow', 'gpuicn', 'bonsai', 'anpec', 'seisei']) {
+  if (!work.some(project => project.slug === slug)) continue;
+  const html = fs.readFileSync(path.join(root, 'projects', slug, 'index.html'), 'utf8');
+  assert.equal((html.match(/<figcaption(?:\s|>)/g) || []).length, 2, `${slug}: two labeled walkthrough examples`);
+}
 for (const page of pages) {
   const html = fs.readFileSync(path.join(root, page), 'utf8');
   assert.equal((html.match(/<h1(?:\s|>)/g) || []).length, 1, `${page}: one heading`);
@@ -21,6 +27,7 @@ for (const page of pages) {
   assert.ok(html.includes('property="og:image:alt"') && html.includes('name="twitter:image:alt"'), `${page}: image descriptions`);
   socialImages.add(path.join(root, new URL(og).pathname));
   assert.ok(!/noindex|\/explore\/|Compare designs|theme\.js/.test(html), `${page}: final presentation`);
+  assert.ok(!/linkedin/i.test(html), `${page}: deleted LinkedIn profile is not referenced`);
   for (const [, url] of html.matchAll(/(?:href|src)="(\/[^"#?]*)/g)) {
     const target = path.join(root, url);
     assert.ok(fs.existsSync(target) || fs.existsSync(path.join(target, 'index.html')), `${page}: missing ${url}`);
@@ -33,6 +40,21 @@ for (const image of socialImages) {
 const icon = await sharp(path.join(root, 'apple-touch-icon.png')).metadata();
 assert.deepEqual([icon.width, icon.height], [180, 180], 'Home-screen icon dimensions');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+// Profile and article markup must describe the same person and resolve to the canonical domain.
+const readSchema = html => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] ?? 'null');
+assert.equal(readSchema(home)['@type'], 'WebSite');
+const about = fs.readFileSync(path.join(root, 'about/index.html'), 'utf8');
+const profile = readSchema(about);
+assert.equal(profile['@type'], 'ProfilePage');
+assert.equal(profile.mainEntity.name, 'Aryakumar Jha');
+assert.deepEqual(profile.mainEntity.alternateName, ['Arya Jha', 'Arya Kumar Jha', 'devaryakjha']);
+assert.equal(profile.mainEntity.url, 'https://aryak.dev/about');
+for (const page of pages.filter(p => /^blog\/.+\/index.html$/.test(p))) {
+  const schema = readSchema(fs.readFileSync(path.join(root, page), 'utf8'));
+  assert.equal(schema['@type'], 'BlogPosting');
+  assert.equal(schema.author['@id'], profile.mainEntity['@id']);
+}
+assert.ok(fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8').includes('https://aryak.dev/about'));
 // Exercise the real theme script with system preferences and unavailable storage.
 const themeScript = fs.readFileSync('src/scripts/theme.js', 'utf8');
 for (const [saved, dark, blocked, expected] of [[null, false, false, 'light'], [null, true, false, 'dark'], ['light', true, false, 'light'], ['dark', false, false, 'dark'], ['invalid', false, false, 'light'], [null, true, true, 'dark']]) {
@@ -63,7 +85,36 @@ for (const [saved, dark, blocked, expected] of [[null, false, false, 'light'], [
   system.change();
   assert.equal(root.dataset.theme, next, 'Explicit choice overrides system changes');
 }
-assert.equal(new Set([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1])).size, 6, 'Six distinct project artworks');
+assert.deepEqual([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1]), work.map(p => p.slug), 'Project artwork order matches published content');
+// Verify loops stop offscreen and while the tab is hidden, then resume together.
+{
+  let intersect, visibilityChange;
+  const artwork = { running: false, toggleAttribute(_, value) { this.running = value; }, removeAttribute() { this.running = false; } };
+  const document = { hidden: false, querySelectorAll: () => [artwork], addEventListener(_, listener) { visibilityChange = listener; } };
+  vm.runInNewContext(fs.readFileSync('src/scripts/artwork-motion.js', 'utf8'), {
+    document,
+    IntersectionObserver: class { constructor(listener) { intersect = listener; } observe() {} },
+  });
+  intersect([{ target: artwork, isIntersecting: true, intersectionRatio: 1 }]);
+  assert.equal(artwork.running, true);
+  document.hidden = true; visibilityChange();
+  assert.equal(artwork.running, false, 'Hidden tabs pause artwork');
+  document.hidden = false; visibilityChange();
+  assert.equal(artwork.running, true, 'Returning to the tab resumes visible artwork');
+  intersect([{ target: artwork, isIntersecting: false, intersectionRatio: 0 }]);
+  assert.equal(artwork.running, false, 'Offscreen artwork pauses');
+  visibilityChange();
+  assert.equal(artwork.running, false, 'Offscreen artwork stays paused on tab changes');
+}
+// The published workbench must render real snapshot values and commit links.
+const activity = JSON.parse(fs.readFileSync(path.join(root, 'github-contributions.json'), 'utf8'));
+assert.equal((home.match(/data-detail=/g) || []).length, activity.days.length);
+assert.ok(home.includes('id="workbench"') && !home.includes('illustrative'));
+for (const day of activity.days) {
+  const date = new Date(day.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
+  assert.ok(home.replaceAll("Sept", "Sep").includes(`data-detail="${date.replace("Sept", "Sep")} · ${day.count} contribution${day.count === 1 ? '' : 's'}"`));
+}
+for (const commit of activity.commits) assert.ok(home.includes(`href="${commit.url}"`));
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
 assert.ok(!sitemap.includes('/explore/'), 'No preview URLs in sitemap');
-console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and six project artworks.`);
+console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and ${work.length} project artworks.`);

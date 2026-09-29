@@ -1,0 +1,78 @@
+<section class="walkthrough" aria-label="Inside Oore CI">
+  <div class="story">
+    <p class="small-label">WHY I BUILT IT</p>
+    <h2>From my own release workflow.</h2>
+    <p>I wanted to run Flutter mobile CI on my own Mac, handle signing, and share internal builds without stitching together too many tools. Oore started there.</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <p class="small-label">01 / The dashboard</p>
+    <h2>A place to start the day.</h2>
+    <p>The dashboard brings running builds, waiting jobs, and runner availability together. Problems surface alongside the work: here, a source that cannot be checked out needs attention before its build can start.</p>
+    </figcaption>
+    <a class="shot-light" href="/projects/oore-build/dashboard.webp" aria-label="Open the Oore dashboard screenshot at full size">
+      <img src="/projects/oore-build/dashboard.webp" width="1440" height="900" alt="Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention." loading="lazy" decoding="async" />
+    </a>
+    <a class="shot-dark" href="/projects/oore-build/dashboard-dark.webp" aria-label="Open the Oore dashboard screenshot at full size">
+      <img src="/projects/oore-build/dashboard-dark.webp" width="1440" height="900" alt="Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention." loading="lazy" decoding="async" />
+    </a>
+    <p class="image-note">Real product UI · Demo data · Tap to enlarge</p>
+  </figure>
+
+  <figure>
+    <figcaption>
+      <p class="small-label">02 / The build queue</p>
+    <h2>From a commit to a build.</h2>
+    <p>Each run keeps its project, branch, commit, and trigger together. Filter by project or status to find a release, or see what is still queued. GitHub and GitLab webhooks can start builds when code changes.</p>
+    </figcaption>
+    <a class="shot-light" href="/projects/oore-build/builds.webp" aria-label="Open the Oore builds screenshot at full size">
+      <img src="/projects/oore-build/builds.webp" width="1440" height="900" alt="Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers." loading="lazy" decoding="async" />
+    </a>
+    <a class="shot-dark" href="/projects/oore-build/builds-dark.webp" aria-label="Open the Oore builds screenshot at full size">
+      <img src="/projects/oore-build/builds-dark.webp" width="1440" height="900" alt="Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers." loading="lazy" decoding="async" />
+    </a>
+    <p class="image-note">Real product UI · Demo data · Tap to enlarge</p>
+  </figure>
+
+  <div class="closing">
+    <div>
+      <p class="small-label">AFTER THE BUILD</p>
+      <h3>Share what you made.</h3>
+      <p>Oore also handles signing workflows and artifact delivery through signed, time-limited links. Android, iOS, and macOS Flutter builds run on your own macOS infrastructure.</p>
+    </div>
+    <div>
+      <p class="small-label">THE TRADEOFF</p>
+      <h3>Your machine, your upkeep.</h3>
+      <p>Self-hosting means keeping the build machine and toolchain running yourself. Oore is still in public alpha, with room to improve through real use and feedback.</p>
+    </div>
+  </div>
+  <a class="grid-button" href="/blog/oore-build-public-alpha">Read the public alpha story ↗</a>
+</section>
+
+<style>
+  .walkthrough { margin: 60px 0; }
+  .story { max-width: 680px; margin: 65px auto 40px; }
+  h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 500; letter-spacing: -.055em; line-height: 1.15; margin: 15px 0 22px; }
+  .story > p:last-child, figcaption > p:last-child, .closing p:last-child { font-size: 16px; line-height: 1.85; color: light-dark(#53524e, #aaa); }
+  figure { margin: 65px 0; padding-top: 35px; border-top: 1px solid light-dark(#d3d2ce, #333); }
+  figure a { display: block; border: 1px solid light-dark(#d3d2ce, #444); border-radius: 8px; overflow: hidden; }
+  figure .shot-dark { display: none; }
+  :global([data-theme="dark"]) figure .shot-light { display: none; }
+  :global([data-theme="dark"]) figure .shot-dark { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme])) figure .shot-light { display: none; }
+    :global(html:not([data-theme])) figure .shot-dark { display: block; }
+  }
+  img { width: 100%; height: auto; }
+  figcaption { max-width: 760px; margin-bottom: 24px; }
+  .image-note { margin-top: 12px; color: light-dark(#62615d, #aaa); font: 11px/1.6 'Courier New', monospace; }
+  .closing { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; border-top: 1px solid light-dark(#d3d2ce, #333); padding-top: 35px; margin-top: 65px; }
+  h3 { font-size: 24px; font-weight: 500; letter-spacing: -.7px; margin: 14px 0; }
+  @media (max-width: 700px) {
+    .story { margin-top: 45px; }
+    figure { margin-block: 30px 45px; }
+    figure { padding-top: 25px; }
+    .closing { grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
+  }
+</style>

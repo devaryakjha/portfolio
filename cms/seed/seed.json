@@ -1,0 +1,218 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "aryak.dev projects",
+    "description": "Initial portfolio projects",
+    "author": "Aryakumar Jha"
+  },
+  "settings": {
+    "title": "aryak.dev",
+    "tagline": "Portfolio content"
+  },
+  "collections": [
+    {
+      "slug": "projects",
+      "label": "Projects",
+      "labelSingular": "Project",
+      "urlPattern": "/projects/{slug}",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "name",
+          "label": "Project name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "short",
+          "label": "Short line",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "description",
+          "label": "Description",
+          "type": "text",
+          "required": true
+        },
+        {
+          "slug": "category",
+          "label": "Category",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "language",
+          "label": "Languages",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "state",
+          "label": "Status",
+          "type": "string",
+          "required": true
+        },
+        {
+          "slug": "href",
+          "label": "Project URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "slug": "source",
+          "label": "Source URL",
+          "type": "url",
+          "required": true
+        },
+        {
+          "slug": "problem",
+          "label": "Problem",
+          "type": "text",
+          "required": true
+        },
+        {
+          "slug": "solution",
+          "label": "Solution",
+          "type": "text",
+          "required": true
+        },
+        {
+          "slug": "highlights",
+          "label": "Highlights, one per line",
+          "type": "text",
+          "required": true
+        },
+        {
+          "slug": "rank",
+          "label": "Display order",
+          "type": "integer",
+          "required": true,
+          "indexed": true
+        }
+      ]
+    }
+  ],
+  "content": {
+    "projects": [
+      {
+        "id": "project-oore-build",
+        "slug": "oore-build",
+        "status": "published",
+        "data": {
+          "name": "Oore CI",
+          "short": "Mobile releases, on your own terms.",
+          "description": "Build, sign, and distribute Flutter apps on your own macOS infrastructure. I started Oore to make my own release workflow less fragmented.",
+          "category": "Build infrastructure",
+          "language": "Rust / TypeScript",
+          "state": "Public alpha",
+          "href": "https://oore.build",
+          "source": "https://github.com/oore-ci/oore.build",
+          "problem": "Mobile release pipelines often become fragmented: build logic in one place, signing in another, and distribution as a separate workflow.",
+          "solution": "Oore CI centralizes build orchestration, signing workflows, and internal artifact delivery into one self-hosted system designed for Flutter mobile teams.",
+          "highlights": "Daemon + CLI + Web UI workflow (`oored`, `oore`, and hosted/self-hosted UI)\nAndroid, iOS, and macOS Flutter build support on macOS hosts\nOIDC-based auth, role-based access, and signed artifact links\nGitHub/GitLab webhook-triggered builds and file-first pipeline config",
+          "rank": 1
+        }
+      },
+      {
+        "id": "project-tagflow",
+        "slug": "tagflow",
+        "status": "published",
+        "data": {
+          "name": "Tagflow",
+          "short": "Rich content. Native Flutter.",
+          "description": "A native rich content runtime for Flutter. Structured documents, HTML support, and live patches, without putting a web view between your content and your app.",
+          "category": "Flutter runtime",
+          "language": "Dart / Flutter",
+          "state": "Runtime beta",
+          "href": "https://pub.dev/packages/tagflow",
+          "source": "https://github.com/devaryakjha/tagflow",
+          "problem": "Dynamic content in Flutter often means choosing between a web view and custom rendering code. Structured content should not have to round-trip through HTML.",
+          "solution": "Tagflow uses a shared document runtime for native content and HTML. Apps can validate trusted JSON, render native widgets, and apply patches as content changes.",
+          "highlights": "Native document rendering with an HTML adapter\nTrusted JSON input with validation and content policies\nDocument patches for live content updates\nStable HTML renderer available alongside the runtime beta",
+          "rank": 2
+        }
+      },
+      {
+        "id": "project-gpuicn",
+        "slug": "gpuicn",
+        "status": "published",
+        "data": {
+          "name": "gpuicn",
+          "short": "Native UI. Source included.",
+          "description": "Open-code components for Rust and GPUI. Add the source to your app, then shape the details to fit your interface.",
+          "category": "Component library",
+          "language": "Rust / GPUI",
+          "state": "Beta",
+          "href": "https://ui.imajha.com",
+          "source": "https://github.com/devaryakjha/gpuicn",
+          "problem": "Native app interfaces need familiar controls, but a fixed component API can make small design changes hard to own.",
+          "solution": "gpuicn brings the shadcn/ui approach to GPUI: editable component source, built on BaseGPUI, with idiomatic Rust APIs and themes.",
+          "highlights": "37 component families with editable source\nReal GPUI previews in the browser through WASM and WebGPU\nComponent examples and API references generated from Rust source\nLucide icons through gpui-icons",
+          "rank": 3
+        }
+      },
+      {
+        "id": "project-bonsai",
+        "slug": "bonsai",
+        "status": "published",
+        "data": {
+          "name": "Bonsai",
+          "short": "A native home for your Git work.",
+          "description": "A macOS Git client built in Rust and GPUI. An exploration of what a focused, native interface for everyday Git work can feel like.",
+          "category": "macOS application",
+          "language": "Rust / GPUI",
+          "state": "In development",
+          "href": "https://github.com/devaryakjha/bonsai",
+          "source": "https://github.com/devaryakjha/bonsai",
+          "problem": "Git has a lot of power. Making that power clear in a native desktop interface is an interesting design problem.",
+          "solution": "Bonsai explores that problem with Rust and GPUI, with the development happening in the open.",
+          "highlights": "Native macOS interface\nRust and GPUI\nOpen-source development",
+          "rank": 4
+        }
+      },
+      {
+        "id": "project-anpec",
+        "slug": "anpec",
+        "status": "published",
+        "data": {
+          "name": "Anpec",
+          "short": "Know the device. Adapt the app.",
+          "description": "Android device performance classification for Flutter apps, so features can adapt to the hardware they run on.",
+          "category": "Flutter plugin",
+          "language": "Kotlin / Dart",
+          "state": "Open source",
+          "href": "https://pub.dev/packages/anpec",
+          "source": "https://github.com/devaryakjha/anpec",
+          "problem": "A single experience for all Android devices can break UX quality on lower-tier hardware and waste resources on higher-tier devices.",
+          "solution": "anpec classifies device performance at runtime so apps can apply feature flags and behavior tuning based on actual capability.",
+          "highlights": "Runtime performance classification for Android in Flutter apps\nSupports capability-aware feature flags and fallback paths\nHelps optimize animations, effects, and expensive processing\nSimple integration as a focused plugin",
+          "rank": 5
+        }
+      },
+      {
+        "id": "project-seisei",
+        "slug": "seisei",
+        "status": "published",
+        "data": {
+          "name": "Seisei",
+          "short": "A little more certainty for AI.",
+          "description": "Typed AI contracts for Dart and Flutter applications.",
+          "category": "Dart package",
+          "language": "Dart",
+          "state": "Open source",
+          "href": "https://github.com/devaryakjha/seisei",
+          "source": "https://github.com/devaryakjha/seisei",
+          "problem": "Applications need clear expectations at the boundary between AI output and application code.",
+          "solution": "Seisei explores typed contracts for that boundary in Dart and Flutter.",
+          "highlights": "Typed AI contracts\nDart and Flutter\nOpen source",
+          "rank": 6
+        }
+      }
+    ]
+  }
+}

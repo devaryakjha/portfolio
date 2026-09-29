@@ -1,0 +1,61 @@
+
+.workbench { margin:64px 4.5% 0; scroll-margin-top:35px; }
+.bench-layout { display:grid; grid-template-columns:1fr 1fr; border-block:1px solid light-dark(#d3d2ce,#333); }
+.bench-history { padding:30px 34px 28px 0; min-width:0; }
+.bench-label { display:flex; justify-content:space-between; gap:14px; font:10px/1.6 'Courier New',monospace; color:light-dark(#62615d,#999); }
+.bench-label a { text-decoration:none; }
+.bench-months { display:flex; justify-content:space-between; margin:27px 0 10px; font:10px 'Courier New',monospace; color:light-dark(#62615d,#999); }
+.bench-calendar { display:grid; grid-template-rows:repeat(7,1fr); grid-auto-flow:column; grid-template-columns:repeat(26,minmax(0,1fr)); gap:4px; }
+.bench-calendar>:is(span,button) { aspect-ratio:1; border-radius:1px; }
+[data-level="0"] { background:light-dark(#e8e7e2,#222); } [data-level="1"] { background:light-dark(#c6c5bd,#454545); } [data-level="2"] { background:light-dark(#98978f,#777); } [data-level="3"] { background:light-dark(#686760,#aaa); } [data-level="4"] { background:light-dark(#32322e,#ddd); }
+.bench-legend { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:12px; font:10px/1.5 'Courier New',monospace; color:light-dark(#62615d,#999); }
+.bench-scale { display:flex; gap:4px; align-items:center; } .bench-scale i { width:8px; height:8px; }
+.bench-now { border-top:1px solid light-dark(#d3d2ce,#333); margin-top:27px; padding-top:22px; }
+.bench-now p { font-size:18px; line-height:1.5; letter-spacing:-.35px; max-width:350px; margin:10px 0; }
+.bench-now>a { font:11px 'Courier New',monospace; text-decoration:none; }
+.bench-feed { border-left:1px solid light-dark(#d3d2ce,#333); padding:30px 0 10px 34px; min-width:0; }
+.bench-event { display:grid; grid-template-columns:18px minmax(0,1fr) 14px; gap:14px; padding:23px 0; text-decoration:none; border-bottom:1px solid light-dark(#e1e0da,#292929); }
+.bench-event:last-child { border-bottom:0; }
+.bench-event-mark { color:light-dark(#62615d,#999); font:17px 'Courier New',monospace; padding-top:2px; }
+.bench-event-meta { font:11px/1.5 'Courier New',monospace; } .bench-event-meta>span { color:light-dark(#62615d,#999); }
+.bench-event strong { display:block; font-size:15px; line-height:1.5; font-weight:400; margin:7px 0; }
+.bench-event-date { font:10px 'Courier New',monospace; color:light-dark(#62615d,#999); }
+.bench-open { font:13px 'Courier New',monospace; color:light-dark(#62615d,#999); align-self:center; }
+.bench-updated { font:10px/1.6 'Courier New',monospace; color:light-dark(#62615d,#999); margin-top:13px; }
+@media(hover:hover) { .bench-event:hover strong,.bench-now>a:hover,.bench-label a:hover { text-decoration:underline; text-underline-offset:4px; } .bench-event:hover .bench-open { transform:translate(2px,-2px); } }
+@media(prefers-reduced-motion:no-preference) { .bench-open { transition:transform 160ms cubic-bezier(.23,1,.32,1); } }
+@media(max-width:850px) { .bench-layout { grid-template-columns:1fr; } .bench-history { padding-right:0; } .bench-feed { border-left:0; border-top:1px solid light-dark(#d3d2ce,#333); padding-left:0; } .bench-calendar { gap:5px; } }
+@media(max-width:700px) { .workbench { margin:45px 22px 0; } .workbench .grid-section-heading { flex-direction:column; gap:10px; } .bench-calendar { gap:3px; } .bench-legend { align-items:flex-start; } .bench-legend>span:first-child { max-width:115px; } .bench-event { gap:10px; } .bench-now p {font-size:19px;} }
+
+
+/* Familiar contribution-calendar proportions, with a neutral intensity scale. */
+.bench-history>.bench-label { font-size:11px; }
+.bench-chart { display:grid; grid-template-columns:28px minmax(0,1fr); grid-template-rows:auto auto; gap:8px; max-width:423px; margin-top:25px; }
+.bench-months { grid-column:2; display:grid; grid-template-columns:repeat(26,minmax(0,1fr)); gap:3px; margin:0; font:11px Arial,sans-serif; color:light-dark(#61615c,#aaa); }
+.bench-months>span { grid-column:var(--week) / span 2; white-space:nowrap; }
+.bench-weekdays { display:grid; grid-template-rows:repeat(7,1fr); align-items:center; gap:3px; font:10px Arial,sans-serif; color:light-dark(#61615c,#aaa); }
+.bench-weekdays>span:nth-child(2) { grid-row:3; } .bench-weekdays>span:nth-child(3) { grid-row:5; }
+.bench-calendar { gap:3px; }
+.bench-calendar>:is(span,button) { border-radius:2px; box-shadow:inset 0 0 0 1px light-dark(#00000008,#ffffff08); }
+.bench-calendar>:is(span,button):hover { outline:1px solid light-dark(#494945,#bbb); outline-offset:1px; }
+.bench-history [data-level="0"] { background:light-dark(#eeede9,#1d1d1d); }
+.bench-history [data-level="1"] { background:light-dark(#cbc9c3,#383838); }
+.bench-history [data-level="2"] { background:light-dark(#a29f98,#626262); }
+.bench-history [data-level="3"] { background:light-dark(#727068,#959595); }
+.bench-history [data-level="4"] { background:light-dark(#383732,#d0d0d0); }
+.bench-legend { margin:10px 0 0; max-width:423px; justify-content:flex-end; font:10px Arial,sans-serif; color:light-dark(#61615c,#aaa); }
+.bench-scale { gap:3px; } .bench-scale>span:first-child { margin-right:4px; } .bench-scale>span:last-child { margin-left:4px; }
+.bench-scale i { width:10px; height:10px; border-radius:2px; }
+.bench-range { white-space:nowrap; }
+@media(max-width:360px) { .bench-history>.bench-label { font-size:10px; } }
+@media(max-width:850px) { .bench-chart,.bench-legend { margin-inline:auto; } }
+
+
+.bench-calendar>button { border:0; padding:0; min-width:0; cursor:pointer; }
+.bench-calendar>button:focus-visible { outline:2px solid light-dark(#444,#ddd); outline-offset:1px; }
+.bench-tooltip { position:fixed; z-index:100; pointer-events:none; padding:9px 12px; border-radius:6px; background:light-dark(#292929,#ededed); color:light-dark(#fff,#181818); box-shadow:0 3px 12px #0002; font:12px/1.5 Arial,sans-serif; text-align:center; }
+.bench-tooltip strong { display:block; font-weight:600; }
+.bench-tooltip span { display:block; opacity:.8; }
+
+.bench-exploring-next { margin-top:20px; } .bench-exploring-next a { font:11px "Courier New",monospace; text-decoration:none; } .bench-exploring-next a:hover { text-decoration:underline; } .bench-calendar>button { min-height:0; }
+.bench-event strong,.bench-event-meta { overflow-wrap:anywhere; }

@@ -1,0 +1,50 @@
+---
+import activity from '../../public/github-contributions.json';
+import '../styles/workbench.css';
+const format = (date: string, options: Intl.DateTimeFormatOptions) => new Date(date).toLocaleDateString('en-GB', { ...options, timeZone: 'UTC' });
+const month = (date: string) => format(date, { month: 'short', year: 'numeric' });
+const fullDate = (date: string) => format(date, { day: '2-digit', month: 'short', year: 'numeric' });
+const months = activity.days.flatMap((day, index) => {
+  if (index > 0 && day.date.slice(0, 7) === activity.days[index - 1].date.slice(0, 7)) return [];
+  return [{ week: Math.min(25, Math.floor(index / 7) + 1), name: format(day.date, { month: 'short' }) }];
+});
+---
+<section class="workbench" id="workbench" aria-labelledby="workbench-title">
+  <header class="grid-section-heading"><h2 id="workbench-title">On the workbench<span> / lately</span></h2><span>A few things taking shape.</span></header>
+  <div class="bench-layout">
+    <div class="bench-history">
+      <div class="bench-label"><span>CONTRIBUTIONS</span><span class="bench-range">{month(activity.from)} — {month(activity.to)}</span></div>
+      <div class="bench-chart">
+        <div class="bench-months" aria-hidden="true">{months.map(m => <span style={`--week:${m.week}`}>{m.name}</span>)}</div>
+        <div class="bench-weekdays" aria-hidden="true"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+        <div class="bench-calendar" role="group" aria-label={`GitHub contributions for ${activity.username}, ${fullDate(activity.from)} to ${fullDate(activity.to)}. Use arrow keys to explore dates.`}>
+          {activity.days.map((day, index) => {
+            const detail = `${fullDate(day.date)} · ${day.count} contribution${day.count === 1 ? '' : 's'}`;
+            return <button type="button" data-level={day.level} data-detail={detail} aria-label={detail} tabindex={index === activity.days.length - 1 ? 0 : -1}></button>;
+          })}
+        </div>
+      </div>
+      <div class="bench-legend"><span class="bench-scale" aria-label="Less to more contributions"><span>Less</span>{[0,1,2,3,4].map(level => <i data-level={level} aria-hidden="true"></i>)}<span>More</span></span></div>
+      <div class="bench-now">
+        <span class="bench-label">CURRENTLY EXPLORING</span>
+        <p>Making Flutter releases feel a little less complicated.</p>
+        <a href="https://oore.build">Oore CI <span aria-hidden="true">↗</span></a>
+        <div class="bench-exploring-next"><p>Building native UI components with GPUI.</p><a href="https://ui.imajha.com">gpuicn <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </div>
+    <div class="bench-feed">
+      <div class="bench-label"><span>RECENT PUBLIC COMMITS</span><a href="https://github.com/devaryakjha">View GitHub ↗</a></div>
+      {activity.commits.map(commit => <a class="bench-event" href={commit.url}>
+        <span class="bench-event-mark" aria-hidden="true">↗</span>
+        <span><span class="bench-event-meta">{commit.repo.split('/')[1]} <span>· commit</span></span><strong>{commit.title}</strong><time class="bench-event-date" datetime={commit.date}>{fullDate(commit.date)}</time></span>
+        <span class="bench-open" aria-hidden="true">↗</span>
+      </a>)}
+      {activity.commits.length === 0 && <p>No recent public commits. More on GitHub.</p>}
+    </div>
+  </div>
+  <p class="bench-updated">From GitHub · updated <time datetime={activity.updatedAt}>{fullDate(activity.updatedAt)}</time></p>
+</section>
+<div class="bench-tooltip" id="bench-tooltip" role="tooltip" hidden><strong></strong><span></span></div>
+<script>
+  import '../scripts/workbench.js';
+</script>
