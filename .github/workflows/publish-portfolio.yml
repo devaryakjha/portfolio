@@ -2,7 +2,7 @@ name: Publish portfolio
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'codex/**']
   schedule:
     - cron: '*/15 * * * *'
     - cron: '7 0 * * *'
