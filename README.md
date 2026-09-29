@@ -32,7 +32,8 @@ Run `bun scripts/check-site.mjs` after building to check routes, assets, and met
 ## Content
 
 - Blog posts: `src/content/blog/*.md`
-- Static assets: `public/`
+- Editable portrait and screenshots: EmDash Images, snapshotted to `src/data/media.snapshot.json` and `public/cms/`
+- Code-generated artwork and other static assets: `public/`
 - Published projects: `src/data/work.snapshot.json`, refreshed from the separate EmDash app in `cms/`
 
 The public site is still fully generated at build time. Editing or reordering a
@@ -64,15 +65,22 @@ step uses the approved Wrangler exception. `make deploy-static` builds and
 uploads without refreshing GitHub activity. `make sync-projects` refreshes the
 project snapshot with `EMDASH_URL` and a read-only `EMDASH_TOKEN`.
 
-`.github/workflows/publish-portfolio.yml` publishes static builds on pushes to
-`main`, polls EmDash every 15 minutes, and refreshes GitHub activity daily at
-00:07 UTC. It skips a Pages upload when the code and both snapshots match a
-previous successful upload. Configure repository variable `EMDASH_URL` and
-secrets `EMDASH_TOKEN` (EmDash `content:read`), `CF_ACCESS_CLIENT_ID`,
-`CF_ACCESS_CLIENT_SECRET`, `CLOUDFLARE_API_TOKEN`, and
-`CLOUDFLARE_ACCOUNT_ID`. `PORTFOLIO_GH_TOKEN` is optional; without it, the
-workflow uses its GitHub token for public activity. Until EmDash is configured,
-the workflow keeps building with the checked-in project snapshot.
+Publishing or unpublishing a project or image dispatches
+`.github/workflows/publish-portfolio.yml` immediately through the native EmDash
+plugin. The workflow reads published content, downloads responsive WebP variants
+from Cloudflare Images, and deploys static files to Pages. Visitors load images
+from the portfolio domain; no request waits for the CMS. Failed dispatches stay
+queued in EmDash and retry each minute. Draft saves do not rebuild.
+GitHub activity refreshes daily at 00:07 UTC (05:37 IST), on code pushes, and on
+manual builds. CMS-only builds retain the deployed activity snapshot.
+
+Configure repository variable `EMDASH_URL` and secrets `EMDASH_TOKEN` (EmDash
+`content:read` and `media:read`), `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET`,
+`CLOUDFLARE_API_TOKEN`, and `CLOUDFLARE_ACCOUNT_ID`. Store a fine-grained GitHub
+token with Actions write access to this repository as the CMS Worker secret
+`PORTFOLIO_GITHUB_TOKEN`. `PORTFOLIO_GH_TOKEN` is optional for activity.
+`make sync-media` refreshes CMS images with the same read credentials.
+Offline builds use the checked-in snapshots and image files.
 
 ## GitHub contribution snapshot
 
