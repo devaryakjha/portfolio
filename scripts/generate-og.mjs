@@ -19,7 +19,9 @@ function lines(title) {
 assert.equal(escape('A & <B>'), 'A &amp; &lt;B&gt;');
 assert.deepEqual(lines('From the interface. To the internals.'), ['From the interface. To', 'the internals.']);
 
-const portrait = (await fs.readFile('src/assets/images/grid/arya-line.png')).toString('base64');
+const media = JSON.parse(await fs.readFile('src/data/media.snapshot.json', 'utf8'));
+const portraitSource = `public${media.portrait.light.original}`;
+const portrait = (await sharp(portraitSource).png().toBuffer()).toString('base64');
 async function generate(file, label, title, subtitle) {
   const titleLines = Array.isArray(title) ? title : lines(title);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">

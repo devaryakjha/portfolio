@@ -95,6 +95,32 @@
           "indexed": true
         }
       ]
+    },
+    {
+      "slug": "images",
+      "label": "Images",
+      "labelSingular": "Image",
+      "supports": [
+        "drafts",
+        "revisions"
+      ],
+      "fields": [
+        {
+          "slug": "image",
+          "label": "Image",
+          "type": "image",
+          "required": true,
+          "options": {
+            "darkVariant": true
+          }
+        },
+        {
+          "slug": "alt",
+          "label": "Alt text",
+          "type": "string",
+          "required": true
+        }
+      ]
     }
   ],
   "content": {

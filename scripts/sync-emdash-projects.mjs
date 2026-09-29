@@ -1,34 +1,9 @@
 import assert from 'node:assert/strict';
 import { writeFileSync, renameSync } from 'node:fs';
 
-const base = process.env.EMDASH_URL;
-const token = process.env.EMDASH_TOKEN;
-assert(base && token, 'Set EMDASH_URL and EMDASH_TOKEN to sync published projects');
-const origin = new URL(base);
-assert(origin.protocol === 'https:' || (origin.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(origin.hostname)), 'EMDASH_URL must use HTTPS outside local development');
-const accessId = process.env.CF_ACCESS_CLIENT_ID;
-const accessSecret = process.env.CF_ACCESS_CLIENT_SECRET;
-assert(Boolean(accessId) === Boolean(accessSecret), 'Set both Cloudflare Access service token fields');
-const headers = { Authorization: `Bearer ${token}` };
-if (accessId && accessSecret) {
-  headers['CF-Access-Client-Id'] = accessId;
-  headers['CF-Access-Client-Secret'] = accessSecret;
-}
+import { list } from './cms-client.mjs';
 
-const projects = [];
-let cursor;
-do {
-  const url = new URL('/_emdash/api/content/projects', origin);
-  url.searchParams.set('status', 'published');
-  url.searchParams.set('limit', '100');
-  if (cursor) url.searchParams.set('cursor', cursor);
-  const response = await fetch(url, { headers });
-  assert(response.ok, `EmDash project request failed: HTTP ${response.status}`);
-  const body = await response.json();
-  assert(body.success && Array.isArray(body.data?.items), 'EmDash returned an invalid project list');
-  projects.push(...body.data.items);
-  cursor = body.data.nextCursor;
-} while (cursor);
+const projects = await list('projects');
 
 assert(projects.length > 0, 'EmDash has no published projects; keeping the last snapshot');
 const seen = new Set();

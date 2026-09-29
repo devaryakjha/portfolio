@@ -1,3 +1,9 @@
+---
+import media from '../data/media.snapshot.json';
+import StaticImage from './StaticImage.astro';
+const dashboard = media['oore-dashboard'];
+const builds = media['oore-builds'];
+---
 <section class="walkthrough" aria-label="Inside Oore CI">
   <div class="story">
     <p class="small-label">WHY I BUILT IT</p>
@@ -11,11 +17,11 @@
     <h2>A place to start the day.</h2>
     <p>The dashboard brings running builds, waiting jobs, and runner availability together. Problems surface alongside the work: here, a source that cannot be checked out needs attention before its build can start.</p>
     </figcaption>
-    <a class="shot-light" href="/projects/oore-build/dashboard.webp" aria-label="Open the Oore dashboard screenshot at full size">
-      <img src="/projects/oore-build/dashboard.webp" width="1440" height="900" alt="Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention." loading="lazy" decoding="async" />
+    <a class="shot-light" href={dashboard.light.original} aria-label="Open the Oore dashboard screenshot at full size">
+      <StaticImage image={dashboard.light} sizes="(max-width: 900px) 100vw, 900px" loading="lazy" decoding="async" />
     </a>
-    <a class="shot-dark" href="/projects/oore-build/dashboard-dark.webp" aria-label="Open the Oore dashboard screenshot at full size">
-      <img src="/projects/oore-build/dashboard-dark.webp" width="1440" height="900" alt="Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention." loading="lazy" decoding="async" />
+    <a class="shot-dark" href={dashboard.dark.original} aria-label="Open the Oore dashboard screenshot at full size">
+      <StaticImage image={dashboard.dark} sizes="(max-width: 900px) 100vw, 900px" loading="lazy" decoding="async" />
     </a>
     <p class="image-note">Real product UI · Demo data · Tap to enlarge</p>
   </figure>
@@ -26,11 +32,11 @@
     <h2>From a commit to a build.</h2>
     <p>Each run keeps its project, branch, commit, and trigger together. Filter by project or status to find a release, or see what is still queued. GitHub and GitLab webhooks can start builds when code changes.</p>
     </figcaption>
-    <a class="shot-light" href="/projects/oore-build/builds.webp" aria-label="Open the Oore builds screenshot at full size">
-      <img src="/projects/oore-build/builds.webp" width="1440" height="900" alt="Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers." loading="lazy" decoding="async" />
+    <a class="shot-light" href={builds.light.original} aria-label="Open the Oore builds screenshot at full size">
+      <StaticImage image={builds.light} sizes="(max-width: 900px) 100vw, 900px" loading="lazy" decoding="async" />
     </a>
-    <a class="shot-dark" href="/projects/oore-build/builds-dark.webp" aria-label="Open the Oore builds screenshot at full size">
-      <img src="/projects/oore-build/builds-dark.webp" width="1440" height="900" alt="Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers." loading="lazy" decoding="async" />
+    <a class="shot-dark" href={builds.dark.original} aria-label="Open the Oore builds screenshot at full size">
+      <StaticImage image={builds.dark} sizes="(max-width: 900px) 100vw, 900px" loading="lazy" decoding="async" />
     </a>
     <p class="image-note">Real product UI · Demo data · Tap to enlarge</p>
   </figure>

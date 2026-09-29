@@ -1,7 +1,7 @@
 PROJECT ?= $(CF_PAGES_PROJECT)
 BRANCH ?= main
 
-.PHONY: build deploy deploy-static refresh-contributions sync-projects
+.PHONY: build deploy deploy-static refresh-contributions sync-projects sync-media
 
 build:
 	bun run build
@@ -11,6 +11,9 @@ refresh-contributions:
 
 sync-projects:
 	bun scripts/sync-emdash-projects.mjs
+
+sync-media:
+	bun scripts/sync-emdash-media.mjs
 
 deploy: refresh-contributions deploy-static
 

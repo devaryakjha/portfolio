@@ -1,0 +1,48 @@
+{
+  "portrait": {
+    "light": {
+      "src": "/cms/0c707fd08f43b6b1b6e0-640.webp",
+      "srcset": "/cms/59085812290a5b294c22-240.webp 240w, /cms/e4ea2d38f2287c1ab9f9-400.webp 400w, /cms/0c707fd08f43b6b1b6e0-640.webp 640w",
+      "original": "/cms/2583f514d329a4ac5192-original.png",
+      "width": 1254,
+      "height": 1254,
+      "alt": "Line drawing of Arya with glasses and a crooked grin"
+    }
+  },
+  "oore-dashboard": {
+    "light": {
+      "src": "/cms/85885a9aa17b04ad2177-1440.webp",
+      "srcset": "/cms/638306f54c9fb134b22b-640.webp 640w, /cms/6587f23084b68cf8cfdd-960.webp 960w, /cms/85885a9aa17b04ad2177-1440.webp 1440w",
+      "original": "/cms/163d299e192af7bd24a9-original.webp",
+      "width": 1440,
+      "height": 900,
+      "alt": "Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention."
+    },
+    "dark": {
+      "src": "/cms/74e6aaeb99ff7fda4b3b-1440.webp",
+      "srcset": "/cms/d0ce6fea9b9862c240f1-640.webp 640w, /cms/9ae9b846b3cfd8626454-960.webp 960w, /cms/74e6aaeb99ff7fda4b3b-1440.webp 1440w",
+      "original": "/cms/1365e74a27c1ba7acf4e-original.webp",
+      "width": 1440,
+      "height": 900,
+      "alt": "Oore dashboard showing running builds, the queue, runner availability, and a source error that needs attention."
+    }
+  },
+  "oore-builds": {
+    "light": {
+      "src": "/cms/b1a9bf3016a6836301b8-1440.webp",
+      "srcset": "/cms/c002ffde6c90fc1db61c-640.webp 640w, /cms/6360c7f95b7d24a0ec82-960.webp 960w, /cms/b1a9bf3016a6836301b8-1440.webp 1440w",
+      "original": "/cms/9733e031b8929933802f-original.webp",
+      "width": 1440,
+      "height": 900,
+      "alt": "Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers."
+    },
+    "dark": {
+      "src": "/cms/3b937b906ecad8568c54-1440.webp",
+      "srcset": "/cms/a55f64c78f4eb4e3761a-640.webp 640w, /cms/c528907fc79b1a54beba-960.webp 960w, /cms/3b937b906ecad8568c54-1440.webp 1440w",
+      "original": "/cms/2f39f06c7257e71871bf-original.webp",
+      "width": 1440,
+      "height": 900,
+      "alt": "Oore builds list with projects, queued and running jobs, completed builds, branches, commits, and build triggers."
+    }
+  }
+}
