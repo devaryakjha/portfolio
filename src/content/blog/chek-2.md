@@ -54,8 +54,11 @@ The server is optional. The app never needs it.
 The same library now opens at [app.chek.page](https://app.chek.page), with Reading Now, shared libraries, sites, and search. To try it without setting anything up, use the demo at demo.chek.page.
 
 <figure>
-  <div class="device-browser"><div class="device-bar" aria-hidden="true"><span class="device-dots"><i></i><i></i><i></i></span><span class="device-address">app.chek.page</span></div><img src="/blog/chek-2/web-comic-1120.webp" width="1120" height="700" loading="lazy" decoding="async" alt="Little Nemo in the Chek web app, a full comic page with a page slider below it." /></div>
-  <figcaption>Little Nemo, in the browser.</figcaption>
+  <div class="device-web">
+    <div class="device-browser"><div class="device-bar" aria-hidden="true"><span class="device-dots"><i></i><i></i><i></i></span><span class="device-address">app.chek.page</span></div><img src="/projects/chek/web-home-1100.webp" srcset="/projects/chek/web-home-1100.webp 1100w, /projects/chek/web-home-2200.webp 2200w" sizes="(max-width: 700px) 90vw, 580px" width="1100" height="619" loading="lazy" decoding="async" alt="The Chek web app on Reading Now, with a shelf of recently added books and comics beside a sidebar for Shared, Sites, Search, and Settings." /></div>
+    <div class="device-browser device-browser-small"><div class="device-bar" aria-hidden="true"><span class="device-dots"><i></i><i></i><i></i></span></div><img src="/blog/chek-2/web-comic-1120.webp" srcset="/blog/chek-2/web-comic-560.webp 560w, /blog/chek-2/web-comic-1120.webp 1120w" sizes="(max-width: 700px) 45vw, 300px" width="1120" height="700" loading="lazy" decoding="async" alt="Little Nemo open in the Chek web reader, with a page slider below." /></div>
+  </div>
+  <figcaption>Reading Now, and Little Nemo in the web reader.</figcaption>
 </figure>
 
 ## What it doesn't do
