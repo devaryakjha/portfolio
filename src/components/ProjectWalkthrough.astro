@@ -1,6 +1,6 @@
 ---
 const { project } = Astro.props;
-const stories: Record<string, { intro: string; steps: { title: string; text: string; labels?: string[]; code?: string; note: string }[]; closing: string }> = {
+const stories: Record<string, { intro: string; steps: { title: string; text: string; labels?: string[]; code?: string; shot?: { name: string; height: number; alt: string }; note: string }[]; closing: string }> = {
   tagflow: {
     intro: 'Tagflow started as an HTML renderer for Flutter. The beta takes that a little further: apps can now work with structured documents directly, while keeping HTML support for content that already uses it.',
     steps: [
@@ -10,12 +10,12 @@ const stories: Record<string, { intro: string; steps: { title: string; text: str
     closing: 'The native runtime is still in beta, so APIs may change. The stable HTML-renderer line remains available if that is all your app needs.',
   },
   gpuicn: {
-    intro: 'gpuicn brings editable UI components to Rust and GPUI. The idea is simple: add the source to your app, then change the details yourself. It follows the same source distribution approach as shadcn/ui.',
+    intro: 'gpuicn brings editable UI components to Rust and GPUI, in the spirit of shadcn/ui. Add the source to your app and change the details yourself, or use the gpuicn crate and copy out only the components you want to own.',
     steps: [
-      { title: 'Add only what you need.', text: 'Once the CLI and registry are set up, you can add individual components. The installer copies the Rust source and shared modules into your app. There is no CLI dependency at runtime.', code: 'gpuicn add button sidebar', labels: ['Choose components', 'Copy Rust source', 'Use in your app'], note: 'CLI example · Requires the matching CLI, registry, and GPUI dependencies. See the setup guide.' },
-      { title: 'Make it fit your app.', text: 'The source stays editable, so styling and behavior can change with your interface. The catalog includes examples and real GPUI previews in the browser to help you decide where to start.', labels: ['Browse examples', 'Edit the source', 'Review updates'], note: 'Working with the library · Updates still need a source review.' },
+      { title: 'A real app, built from the parts.', text: 'This workspace is a native GPUI app assembled from gpuicn components: the sidebar, tabs, task list, badges, buttons, and the inspector panel. It switches between light and dark themes with the rest of the system, and so does this screenshot.', shot: { name: 'workspace', height: 768, alt: 'The gpuicn workspace demo, a native app with a project sidebar, a task list for a website launch, and a panel showing the selected task’s status, priority, and notes.' }, note: 'Real GPUI app · The gpuicn workspace demo · Tap to enlarge' },
+      { title: 'Add only what you need.', text: 'One command creates an app with pinned dependencies, a theme, and a starter window. After that, you add components one at a time. The CLI copies the Rust source into your app, and gpuicn diff shows what an update would change in your copy.', code: 'cargo install gpuicn-cli --locked\ngpuicn new my-app\ngpuicn add sidebar dialog', labels: ['Create the app', 'Add components', 'Edit the source'], note: 'CLI example · Crate mode: gpuicn new my-app --crate, then gpuicn eject button to own one component.' },
     ],
-    closing: 'This is still beta software. Keep the dependency and registry versions together, and review changes before replacing source you have edited.',
+    closing: 'gpuicn 0.5 is still experimental, so APIs and styling can change between releases. Keep the CLI and crate versions together, and review an update before replacing source you have edited.',
   },
   bonsai: {
     intro: 'Bonsai is an early exploration of a native macOS Git client, built with Rust and GPUI. There is not a finished app to walk through yet. For now, this is the direction of the project.',
@@ -54,6 +54,9 @@ const story = stories[project.slug];
     <figcaption><p class="small-label">0{i + 1} / {project.name}</p><h2>{step.title}</h2><p>{step.text}</p></figcaption>
     <div class="example">
       {step.labels && <ol class="flow" aria-label="Workflow">{step.labels.map(label => <li>{label}</li>)}</ol>}
+      {step.shot && ['light', 'dark'].map(theme => <a class={`shot shot-${theme}`} href={`/projects/${project.slug}/${step.shot.name}-${theme}-1189.webp`} aria-label={`Open the ${project.name} screenshot at full size`}>
+        <img src={`/projects/${project.slug}/${step.shot.name}-${theme}-1189.webp`} srcset={`/projects/${project.slug}/${step.shot.name}-${theme}-640.webp 640w, /projects/${project.slug}/${step.shot.name}-${theme}-1189.webp 1189w`} sizes="(max-width: 900px) 100vw, 820px" width="1189" height={step.shot.height} alt={step.shot.alt} loading="lazy" decoding="async" />
+      </a>)}
       {step.code && <pre tabindex="0" aria-label={`${project.name} code example`}><code>{step.code}</code></pre>}
     </div>
     <p class="note">{step.note}</p>
@@ -71,6 +74,15 @@ const story = stories[project.slug];
   .flow { list-style: none; padding: 0; margin: 0; display: flex; align-items: center; gap: 30px; }
   .flow li { flex: 1; position: relative; text-align: center; padding: 24px 12px; border: 1px solid light-dark(#c4c3bf,#444); font: 14px/1.5 'Courier New',monospace; }
   .flow li + li::before { content: '→'; position: absolute; left: -25px; top: 50%; transform: translateY(-50%); }
+  .shot { display: block; border: 1px solid light-dark(#d3d2ce,#444); border-radius: 8px; overflow: hidden; }
+  .shot img { display: block; width: 100%; height: auto; }
+  .shot-dark { display: none; }
+  :global([data-theme="dark"]) .shot-light { display: none; }
+  :global([data-theme="dark"]) .shot-dark { display: block; }
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme])) .shot-light { display: none; }
+    :global(html:not([data-theme])) .shot-dark { display: block; }
+  }
   pre { margin: 0; overflow-x: auto; font: 14px/1.8 'Courier New',monospace; tab-size: 2; }
   .flow + pre { margin-top: 30px; padding-top: 25px; border-top: 1px solid light-dark(#d3d2ce,#333); }
   .note { margin-top: 12px; color: light-dark(#62615d,#aaa); font: 11px/1.6 'Courier New',monospace; }
