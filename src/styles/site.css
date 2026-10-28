@@ -89,6 +89,14 @@ img,svg { max-width: 100%; display: block; }
 .reading-body :not(pre)>code { font-size: .85em; padding: 2px 5px; background: light-dark(#e7e6e2, #e7e7e7); color: #111; }
 .reading-body pre { overflow-x: auto; }
 .reading-body .expressive-code { filter: grayscale(1); }
+.reading-body figure { margin: 36px 0; }
+.reading-body figure img { display: block; width: 100%; height: auto; border: 1px solid light-dark(#d3d2ce, #333); border-radius: 8px; }
+.reading-body figcaption { margin-top: 12px; color: light-dark(#62615d, #aaa); font: 11px/1.6 'Courier New', monospace; }
+.reading-body .post-hero img { border: 0; }
+.reading-body .post-phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 28px; background: light-dark(#f0efec, #101010); border: 1px solid light-dark(#d3d2ce, #333); border-radius: 8px; }
+.reading-body .post-phones img { width: calc(50% - 12px); max-width: 240px; border: 0; border-radius: 22px; }
+.reading-body .post-phones figcaption { flex-basis: 100%; text-align: center; margin: 0; }
+.reading-body .post-credits { color: light-dark(#62615d, #aaa); font: 11px/1.6 'Courier New', monospace; }
 .reading-end { max-width: 650px; margin: 65px 0 0 auto; padding-top: 30px; border-top: 1px solid light-dark(#53524e, #aaa); font-size: 14px; line-height: 2; }
 .case-header { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin: 25px 0 50px; }
 .case-header h1 { font-size: clamp(65px,11vw,155px); font-weight: 500; letter-spacing: -.075em; line-height: 1; margin: 20px 0; }
