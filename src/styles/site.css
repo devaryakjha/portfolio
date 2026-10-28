@@ -392,5 +392,10 @@ img,svg { max-width: 100%; display: block; }
 .device-dots { display: flex; gap: 6px; }
 .device-dots i { width: 10px; height: 10px; border-radius: 50%; background: #d5d7e0; }
 .device-address { flex: 0 1 260px; margin-inline: auto; padding: 4px 12px; border-radius: 8px; background: #fff; color: #6b6d78; font: 12px/1.4 system-ui, sans-serif; text-align: center; }
+.device-web { position: relative; padding: clamp(20px, 4vw, 40px) clamp(16px, 4vw, 40px) clamp(48px, 9vw, 90px); background: light-dark(#eceef6, #101118); border: 1px solid light-dark(#d3d2ce, #333); border-radius: 8px; overflow: hidden; }
+.device-web > .device-browser:first-child { width: 88%; }
+.device-browser-small { position: absolute; right: clamp(16px, 4vw, 40px); bottom: clamp(16px, 3vw, 30px); width: 46%; }
+.device-browser-small .device-bar { height: 22px; }
+.device-browser-small .device-dots i { width: 7px; height: 7px; }
 .device-bar::after { content: ""; width: 42px; }
 @media (max-width: 700px) { .device-bar { height: 26px; gap: 8px; padding: 0 10px; } .device-dots i { width: 7px; height: 7px; } .device-address { font-size: 10px; padding: 2px 8px; } .device-bar::after { width: 27px; } }
