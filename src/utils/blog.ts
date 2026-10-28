@@ -1,5 +1,6 @@
 export type BlogFrontmatter = {
   excerpt?: string;
+  summary?: string;
   title: string;
   shortTitle?: string;
   date: string;
