@@ -11,7 +11,7 @@ const work = JSON.parse(fs.readFileSync('src/data/work.snapshot.json', 'utf8'));
 assert.equal(pages.length, 6 + work.length, 'Home, about, projects, writing, two posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
-for (const slug of ['oore-build', 'chek', 'tagflow', 'gpuicn', 'bonsai', 'anpec', 'seisei']) {
+for (const slug of ['oore-build', 'chek', 'tagflow', 'gpuicn', 'anpec', 'seisei']) {
   if (!work.some(project => project.slug === slug)) continue;
   const html = fs.readFileSync(path.join(root, 'projects', slug, 'index.html'), 'utf8');
   assert.equal((html.match(/<figcaption(?:\s|>)/g) || []).length, 2, `${slug}: two labeled walkthrough examples`);

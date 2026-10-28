@@ -140,8 +140,27 @@
           "source": "https://github.com/oore-ci/oore.build",
           "problem": "Mobile release pipelines often become fragmented: build logic in one place, signing in another, and distribution as a separate workflow.",
           "solution": "Oore CI centralizes build orchestration, signing workflows, and internal artifact delivery into one self-hosted system designed for Flutter mobile teams.",
-          "highlights": "Daemon + CLI + Web UI workflow (`oored`, `oore`, and hosted/self-hosted UI)\nAndroid, iOS, and macOS Flutter build support on macOS hosts\nOIDC-based auth, role-based access, and signed artifact links\nGitHub/GitLab webhook-triggered builds and file-first pipeline config",
+          "highlights": "Build, sign, and publish Flutter apps to the App Store and Google Play from one pipeline\nShared signing library with per-workflow signing and publishing\nPipelines and workflows defined in .oore.yaml files in your repository\nDaemon, CLI, and web UI, with concurrent builds per macOS runner",
           "rank": 1
+        }
+      },
+      {
+        "id": "project-chek",
+        "slug": "chek",
+        "status": "published",
+        "data": {
+          "name": "Chek",
+          "short": "Just one more chapter.",
+          "description": "A reader for books and comics on iPhone, iPad, and the web, with an optional self-hosted server. Chek 2.0 is out on the App Store.",
+          "category": "Reading app",
+          "language": "Swift / Rust / SolidJS",
+          "state": "Chek 2.0",
+          "href": "https://chek.page",
+          "source": "https://github.com/readchek/chek",
+          "problem": "Reading apps tend to tie your library to one store or one device, and self-hosted library servers rarely come with a reader that feels native.",
+          "solution": "Chek reads your own files offline, with no account. It can also connect to a Chek server, or to Komga and Kavita through it, so your place follows you between devices.",
+          "highlights": "Native iPhone and iPad app, plus a web app at app.chek.page\nReads EPUB, PDF, CBZ, MOBI, AZW3, Markdown, and more, offline\nSelf-hosted Rust server with Docker images, OPDS 2, and WebAssembly source extensions\nChek Reader, the reading engine, published as a standalone Swift package\nNo ads, tracking, or analytics",
+          "rank": 2
         }
       },
       {
@@ -159,8 +178,8 @@
           "source": "https://github.com/devaryakjha/tagflow",
           "problem": "Dynamic content in Flutter often means choosing between a web view and custom rendering code. Structured content should not have to round-trip through HTML.",
           "solution": "Tagflow uses a shared document runtime for native content and HTML. Apps can validate trusted JSON, render native widgets, and apply patches as content changes.",
-          "highlights": "Native document rendering with an HTML adapter\nTrusted JSON input with validation and content policies\nDocument patches for live content updates\nStable HTML renderer available alongside the runtime beta",
-          "rank": 2
+          "highlights": "Native document rendering with an HTML adapter\nMarkdown, streaming content, and code blocks in 1.0.0-beta.1\nTrusted JSON input with validation and content policies\nDocument patches for live content updates\nTables through the tagflow_table extension",
+          "rank": 3
         }
       },
       {
@@ -173,31 +192,12 @@
           "description": "Open-code components for Rust and GPUI. Add the source to your app, then shape the details to fit your interface.",
           "category": "Component library",
           "language": "Rust / GPUI",
-          "state": "Beta",
+          "state": "Experimental · 0.5",
           "href": "https://ui.imajha.com",
           "source": "https://github.com/devaryakjha/gpuicn",
           "problem": "Native app interfaces need familiar controls, but a fixed component API can make small design changes hard to own.",
           "solution": "gpuicn brings the shadcn/ui approach to GPUI: editable component source, built on BaseGPUI, with idiomatic Rust APIs and themes.",
-          "highlights": "37 component families with editable source\nReal GPUI previews in the browser through WASM and WebGPU\nComponent examples and API references generated from Rust source\nLucide icons through gpui-icons",
-          "rank": 3
-        }
-      },
-      {
-        "id": "project-bonsai",
-        "slug": "bonsai",
-        "status": "published",
-        "data": {
-          "name": "Bonsai",
-          "short": "A native home for your Git work.",
-          "description": "A macOS Git client built in Rust and GPUI. An exploration of what a focused, native interface for everyday Git work can feel like.",
-          "category": "macOS application",
-          "language": "Rust / GPUI",
-          "state": "In development",
-          "href": "https://github.com/devaryakjha/bonsai",
-          "source": "https://github.com/devaryakjha/bonsai",
-          "problem": "Git has a lot of power. Making that power clear in a native desktop interface is an interesting design problem.",
-          "solution": "Bonsai explores that problem with Rust and GPUI, with the development happening in the open.",
-          "highlights": "Native macOS interface\nRust and GPUI\nOpen-source development",
+          "highlights": "45 components with editable source, or use them as a crate and eject to edit\ngpuicn CLI on crates.io: new, add, diff, eject, and shadcn theme import\nReal GPUI previews in the browser through WASM and WebGPU\nLucide icons through gpui-icons, now on crates.io",
           "rank": 4
         }
       },
@@ -231,7 +231,7 @@
           "category": "Dart package",
           "language": "Dart",
           "state": "Open source",
-          "href": "https://github.com/devaryakjha/seisei",
+          "href": "https://pub.dev/packages/seisei",
           "source": "https://github.com/devaryakjha/seisei",
           "problem": "Applications need clear expectations at the boundary between AI output and application code.",
           "solution": "Seisei explores typed contracts for that boundary in Dart and Flutter.",
