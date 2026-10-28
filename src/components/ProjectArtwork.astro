@@ -1,7 +1,7 @@
 ---
 type Props = { kind: string; name?: string };
 const { kind, name = kind } = Astro.props;
-const custom = !['oore-build', 'tagflow', 'bonsai', 'gpuicn', 'anpec', 'seisei'].includes(kind);
+const custom = !['oore-build', 'chek', 'tagflow', 'bonsai', 'gpuicn', 'anpec', 'seisei'].includes(kind);
 ---
 <div class:list={['art', 'art-grid', 'grid-artwork', `grid-artwork-${kind}`]} data-artwork={kind} aria-hidden="true">
   {custom && <>
@@ -38,6 +38,32 @@ const custom = !['oore-build', 'tagflow', 'bonsai', 'gpuicn', 'anpec', 'seisei']
       </g>
     </svg>
     <div class="grid-art-caption"><span>Oore CI</span><span>Build. Sign. Share privately.</span></div>
+  </>}
+  {kind === 'chek' && <>
+    <svg class="chek-reader" viewBox="0 0 400 270" fill="none">
+      <g class="chek-book art-piece">
+        <path d="M44 84q37-9 74 0v118q-37-9-74 0z" class="art-paper"/>
+        <path d="M118 84q37-9 74 0v118q-37-9-74 0z" class="art-paper"/>
+        <path d="M56 104h50M56 116h50M56 128h42M56 148h50M56 160h50M56 172h34M130 104h50M130 116h50M130 128h50M130 140h38" class="art-wire"/>
+        <text x="56" y="194" class="art-small">EPUB</text>
+      </g>
+      <path class="chek-sync" d="M312 134h22" stroke="light-dark(#a3a29e,#666)" stroke-dasharray="3 3"/>
+      <circle class="chek-sync-dot art-piece" cx="314" cy="134" r="2.5" fill="light-dark(#41403d,#ddd)"/>
+      <g><rect x="336" y="112" width="44" height="44" rx="4" class="art-paper"/><path d="M344 124h28M344 134h28M344 144h28" class="art-wire"/><text x="358" y="172" text-anchor="middle" class="art-small">server</text></g>
+      <rect x="200" y="24" width="112" height="208" rx="16" fill="light-dark(#efeeeb,#121212)" stroke="light-dark(#686763,#777)"/>
+      <rect x="207" y="31" width="98" height="194" rx="10" fill="light-dark(#faf9f6,#191919)" stroke="light-dark(#d3d2ce,#303030)"/>
+      <path d="M241 39h30" stroke="light-dark(#777,#666)" stroke-linecap="round"/>
+      <g stroke="light-dark(#a3a29e,#555)">
+        <rect class="chek-panel chek-panel-a" x="214" y="52" width="84" height="50" rx="2"/>
+        <rect class="chek-panel chek-panel-b" x="214" y="108" width="40" height="58" rx="2"/>
+        <rect class="chek-panel chek-panel-c" x="258" y="108" width="40" height="58" rx="2"/>
+        <rect class="chek-panel chek-panel-d" x="214" y="172" width="84" height="30" rx="2"/>
+      </g>
+      <path d="M226 92q12-14 24-4t26-6M222 154l10-16 8 10 8-6M266 154l10-20 12 20M228 192q30-10 60 0" stroke="light-dark(#c4c3bf,#444)"/>
+      <path d="M214 214h84" stroke="light-dark(#d3d2ce,#333)" stroke-width="3" stroke-linecap="round"/>
+      <path class="chek-progress art-piece" d="M214 214h84" stroke="light-dark(#41403d,#ddd)" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+    <div class="grid-art-caption"><span class="art-brand"><img src="/grid/chek.svg" width="24" height="24" alt="" />Chek</span><span>Just one more chapter.</span></div>
   </>}
   {kind === 'tagflow' && <>
     <svg class="tagflow-document" viewBox="0 0 400 270" fill="none">
