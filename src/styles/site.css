@@ -334,6 +334,9 @@ img,svg { max-width: 100%; display: block; }
 .gpuicn-button { transform-origin: 128px 106px; }
 .seisei-field-a { transform-origin: 67px 103px; }
 .seisei-field-c { transform-origin: 67px 165px; }
+.chek-book { transform: rotate(-6deg); transform-origin: 118px 200px; }
+.chek-panel { fill: light-dark(#deddd7,#303030); fill-opacity: 0; }
+.chek-progress { transform-box: fill-box; transform-origin: left; transform: scaleX(.45); }
 @media (prefers-reduced-motion: no-preference) {
  .art-piece { transition: transform 480ms cubic-bezier(.23,1,.32,1), opacity 320ms ease; }
  .tagflow-source { transform-origin: 100px 140px; }
@@ -351,6 +354,14 @@ img,svg { max-width: 100%; display: block; }
  .seisei-field-b { transform: translateX(5px); }
  .seisei-field-c { transform: translate(-3px,3px) rotate(8deg); }
  .seisei-result { transform: translateX(-10px); opacity: .4; transition-delay: 80ms; }
+ .chek-panel { transition: fill-opacity 320ms ease; }
+ .chek-panel-b { transition-delay: 90ms; }
+ .chek-panel-c { transition-delay: 180ms; }
+ .chek-panel-d { transition-delay: 270ms; }
+ .grid-art-link:focus-visible .chek-book { transform: translateX(-8px) rotate(-2deg); }
+ .grid-art-link:focus-visible .chek-panel { fill-opacity: 1; }
+ .grid-art-link:focus-visible .chek-progress { transform: scaleX(.9); }
+ .grid-art-link:focus-visible .chek-sync-dot { transform: translateX(20px); }
  .grid-art-link:focus-visible .tagflow-source { transform: translateX(-5px) rotate(-3deg); }
  .grid-art-link:focus-visible .tagflow-heading,.grid-art-link:focus-visible .tagflow-paragraph,.grid-art-link:focus-visible .tagflow-media { transform: translateY(0); opacity: 1; }
  .grid-art-link:focus-visible .tagflow-heading .art-highlight { opacity: 1; }
@@ -366,6 +377,10 @@ img,svg { max-width: 100%; display: block; }
  .grid-art-link:focus-visible .seisei-field-a,.grid-art-link:focus-visible .seisei-field-b,.grid-art-link:focus-visible .seisei-field-c { transform: translateX(10px) rotate(0deg); }
  .grid-art-link:focus-visible .seisei-result { transform: translateX(0); opacity: 1; }
  @media (hover: hover) and (pointer: fine) {
+ .grid-artwork:hover .chek-book { transform: translateX(-8px) rotate(-2deg); }
+ .grid-artwork:hover .chek-panel { fill-opacity: 1; }
+ .grid-artwork:hover .chek-progress { transform: scaleX(.9); }
+ .grid-artwork:hover .chek-sync-dot { transform: translateX(20px); }
  .grid-artwork:hover .tagflow-source { transform: translateX(-5px) rotate(-3deg); }
  .grid-artwork:hover .tagflow-heading,.grid-artwork:hover .tagflow-paragraph,.grid-artwork:hover .tagflow-media { transform: translateY(0); opacity: 1; }
  .grid-artwork:hover .tagflow-heading .art-highlight { opacity: 1; }

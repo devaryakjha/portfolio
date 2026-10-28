@@ -1,0 +1,74 @@
+<section class="walkthrough" aria-label="Inside Chek">
+  <div class="story">
+    <p class="small-label">WHY I BUILT IT</p>
+    <h2>One reader for everything.</h2>
+    <p>Comics, manga, and books usually end up in different apps, each with its own idea of where your library lives. Chek, the successor to Chibi Manga, keeps them in one place: your own files on the device, or your own server when you want one.</p>
+  </div>
+
+  <figure>
+    <figcaption>
+      <p class="small-label">01 / On iPhone and iPad</p>
+      <h2>Your library, in your pocket.</h2>
+      <p>Add EPUB, PDF, CBZ, MOBI, AZW3, Markdown, and plain text from Files. Each one opens where you left it, offline and without an account. Comics read panel by panel, and books flow to the screen through Chek Reader, the reading engine behind the app.</p>
+    </figcaption>
+    <div class="phones">
+      <a href="/projects/chek/iphone-library-720.webp" aria-label="Open the Chek library screenshot at full size">
+        <img src="/projects/chek/iphone-library-720.webp" srcset="/projects/chek/iphone-library-360.webp 360w, /projects/chek/iphone-library-720.webp 720w" sizes="(max-width: 700px) 50vw, 360px" width="720" height="1469" loading="lazy" decoding="async" alt="Chek on iPhone showing the library: a grid of book covers including The Wonderful Wizard of Oz, The Time Machine, and Pride and Prejudice." />
+      </a>
+      <a href="/projects/chek/iphone-comic-720.webp" aria-label="Open the Chek comic reader screenshot at full size">
+        <img src="/projects/chek/iphone-comic-720.webp" srcset="/projects/chek/iphone-comic-360.webp 360w, /projects/chek/iphone-comic-720.webp 720w" sizes="(max-width: 700px) 50vw, 360px" width="720" height="1469" loading="lazy" decoding="async" alt="Chek on iPhone reading Pepper&Carrot Episode 8, with three comic panels stacked on the page." />
+      </a>
+    </div>
+    <p class="image-note">Real app · Public-domain books, Pepper&amp;Carrot by David Revoy (CC BY 4.0) · Tap to enlarge</p>
+  </figure>
+
+  <figure>
+    <figcaption>
+      <p class="small-label">02 / On the web</p>
+      <h2>Pick up where you left off.</h2>
+      <p>Connect a Chek server and your place follows you. The same library opens in the browser at app.chek.page, with Reading Now, shared libraries, sites, and search one click away.</p>
+    </figcaption>
+    <a class="wide" href="/projects/chek/web-home-2200.webp" aria-label="Open the Chek web app screenshot at full size">
+      <img src="/projects/chek/web-home-2200.webp" srcset="/projects/chek/web-home-1100.webp 1100w, /projects/chek/web-home-2200.webp 2200w" sizes="(max-width: 900px) 100vw, 900px" width="2200" height="1238" loading="lazy" decoding="async" alt="The Chek web app showing Reading Now, with recently added books and comics in a row beside a sidebar for Shared, Sites, Search, and Settings." />
+    </a>
+    <p class="image-note">Real product UI · Demo library · Tap to enlarge</p>
+  </figure>
+
+  <div class="closing">
+    <div>
+      <p class="small-label">YOUR OWN SERVER</p>
+      <h3>Run the library yourself.</h3>
+      <p>The Chek server is written in Rust and ships as a Docker image. It scans folders for metadata, reads from Komga and Kavita, syncs bookmarks and highlights, speaks OPDS 2, and adds sources through WebAssembly extensions.</p>
+    </div>
+    <div>
+      <p class="small-label">THE TRADEOFF</p>
+      <h3>Optional, and yours to keep.</h3>
+      <p>The app never needs the server. When you do run one, keeping it updated is up to you. There are no ads, tracking, or analytics either way.</p>
+    </div>
+  </div>
+  <a class="grid-button" href="https://apps.apple.com/us/app/chek-books-comics/id6761271144">Get it on the App Store ↗</a>
+  <a class="source" href="https://app.chek.page">Try the web app ↗</a>
+</section>
+
+<style>
+  .walkthrough { margin: 60px 0; }
+  .story { max-width: 680px; margin: 65px auto 40px; }
+  h2 { font-size: clamp(28px, 4vw, 44px); font-weight: 500; letter-spacing: -.055em; line-height: 1.15; margin: 15px 0 22px; }
+  .story > p:last-child, figcaption > p:last-child, .closing p:last-child { font-size: 16px; line-height: 1.85; color: light-dark(#53524e, #aaa); }
+  figure { margin: 65px 0; padding-top: 35px; border-top: 1px solid light-dark(#d3d2ce, #333); }
+  figcaption { max-width: 760px; margin-bottom: 24px; }
+  .phones { display: flex; justify-content: center; gap: 40px; padding: 40px; border: 1px solid light-dark(#d3d2ce, #333); background: light-dark(#f0efec, #101010); border-radius: 8px; }
+  .phones a { display: block; width: min(260px, 50%); border-radius: 24px; overflow: hidden; }
+  .wide { display: block; border: 1px solid light-dark(#d3d2ce, #444); border-radius: 8px; overflow: hidden; }
+  img { display: block; width: 100%; height: auto; }
+  .image-note { margin-top: 12px; color: light-dark(#62615d, #aaa); font: 11px/1.6 'Courier New', monospace; }
+  .closing { display: grid; grid-template-columns: 1fr 1fr; gap: 45px; border-top: 1px solid light-dark(#d3d2ce, #333); padding-top: 35px; margin: 65px 0 30px; }
+  h3 { font-size: 24px; font-weight: 500; letter-spacing: -.7px; margin: 14px 0; }
+  .source { display: inline-block; margin: 24px; font-size: 13px; }
+  @media (max-width: 700px) {
+    .story { margin-top: 45px; }
+    figure { margin-block: 30px 45px; padding-top: 25px; }
+    .phones { gap: 16px; padding: 20px; }
+    .closing { grid-template-columns: 1fr; gap: 30px; margin-top: 40px; }
+  }
+</style>
