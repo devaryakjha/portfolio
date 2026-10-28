@@ -19,9 +19,11 @@ Chek is a reader for books and comics. It takes over from Chibi Manga, and the i
 
 Add EPUB, PDF, CBZ and CBT comics, MOBI, AZW3, FictionBook, Markdown, or plain text from Files. Each one opens where you left it, offline and without an account.
 
-<figure class="post-phones">
-  <img src="/projects/chek/iphone-library-720.webp" srcset="/projects/chek/iphone-library-360.webp 360w, /projects/chek/iphone-library-720.webp 720w" sizes="(max-width: 700px) 45vw, 300px" width="720" height="1469" loading="lazy" decoding="async" alt="The Chek library on iPhone, a grid of book covers." />
-  <img src="/projects/chek/iphone-comic-720.webp" srcset="/projects/chek/iphone-comic-360.webp 360w, /projects/chek/iphone-comic-720.webp 720w" sizes="(max-width: 700px) 45vw, 300px" width="720" height="1469" loading="lazy" decoding="async" alt="Chek reading Pepper&amp;Carrot Episode 8 on iPhone, three panels stacked down the page." />
+<figure>
+  <div class="device-stage">
+    <div class="device-phone"><img src="/projects/chek/iphone-library-720.webp" srcset="/projects/chek/iphone-library-360.webp 360w, /projects/chek/iphone-library-720.webp 720w" sizes="(max-width: 700px) 40vw, 260px" width="720" height="1469" loading="lazy" decoding="async" alt="The Chek library on iPhone, a grid of book covers." /></div>
+    <div class="device-phone"><img src="/projects/chek/iphone-comic-720.webp" srcset="/projects/chek/iphone-comic-360.webp 360w, /projects/chek/iphone-comic-720.webp 720w" sizes="(max-width: 700px) 40vw, 260px" width="720" height="1469" loading="lazy" decoding="async" alt="Chek reading Pepper&amp;Carrot Episode 8 on iPhone, three panels stacked down the page." /></div>
+  </div>
   <figcaption>Your library, and a comic read panel by panel.</figcaption>
 </figure>
 
@@ -37,9 +39,11 @@ If you want your library on every device, run a Chek server. It is written in Ru
 - speaks OPDS 2
 - adds new sources through WebAssembly extensions
 
-<figure class="post-phones">
-  <img src="/blog/chek-2/iphone-shared-720.webp" width="720" height="1469" loading="lazy" decoding="async" alt="A shared Family Library from a Chek server on iPhone, with recently added books, collections, and sites." />
-  <img src="/blog/chek-2/iphone-site-720.webp" width="720" height="1469" loading="lazy" decoding="async" alt="Browsing the Project Gutenberg Classics source in Chek, a grid of public-domain book covers." />
+<figure>
+  <div class="device-stage">
+    <div class="device-phone"><img src="/blog/chek-2/iphone-shared-720.webp" width="720" height="1469" loading="lazy" decoding="async" alt="A shared Family Library from a Chek server on iPhone, with recently added books, collections, and sites." /></div>
+    <div class="device-phone"><img src="/blog/chek-2/iphone-site-720.webp" width="720" height="1469" loading="lazy" decoding="async" alt="Browsing the Project Gutenberg Classics source in Chek, a grid of public-domain book covers." /></div>
+  </div>
   <figcaption>A shared library from your server, and a source added by an extension.</figcaption>
 </figure>
 
@@ -50,7 +54,7 @@ The server is optional. The app never needs it.
 The same library now opens at [app.chek.page](https://app.chek.page), with Reading Now, shared libraries, sites, and search. To try it without setting anything up, use the demo at demo.chek.page.
 
 <figure>
-  <img src="/blog/chek-2/web-comic-1120.webp" width="1120" height="700" loading="lazy" decoding="async" alt="Little Nemo in the Chek web app, a full comic page with a page slider below it." />
+  <div class="device-browser"><div class="device-bar" aria-hidden="true"><span class="device-dots"><i></i><i></i><i></i></span><span class="device-address">app.chek.page</span></div><img src="/blog/chek-2/web-comic-1120.webp" width="1120" height="700" loading="lazy" decoding="async" alt="Little Nemo in the Chek web app, a full comic page with a page slider below it." /></div>
   <figcaption>Little Nemo, in the browser.</figcaption>
 </figure>
 
