@@ -38,8 +38,9 @@ Run `bun scripts/check-site.mjs` after building to check routes, assets, and met
 
 The public site is still fully generated at build time. Editing or reordering a
 published project changes the next build; a visitor never waits for EmDash or D1.
-New projects get a simple default illustration and case study. The original six
-keep their custom artwork and walkthroughs.
+New projects get a simple default illustration and case study until they get custom
+artwork in `ProjectArtwork.astro` and a walkthrough. Oore CI, Chek, Tagflow, gpuicn,
+Anpec, and Seisei have both.
 
 ## Cloudflare Pages
 

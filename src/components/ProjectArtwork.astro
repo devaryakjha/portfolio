@@ -1,7 +1,7 @@
 ---
 type Props = { kind: string; name?: string };
 const { kind, name = kind } = Astro.props;
-const custom = !['oore-build', 'chek', 'tagflow', 'bonsai', 'gpuicn', 'anpec', 'seisei'].includes(kind);
+const custom = !['oore-build', 'chek', 'tagflow', 'gpuicn', 'anpec', 'seisei'].includes(kind);
 ---
 <div class:list={['art', 'art-grid', 'grid-artwork', `grid-artwork-${kind}`]} data-artwork={kind} aria-hidden="true">
   {custom && <>
@@ -78,29 +78,6 @@ const custom = !['oore-build', 'chek', 'tagflow', 'bonsai', 'gpuicn', 'anpec', '
       <g class="tagflow-media art-piece"><rect x="231" y="171" width="30" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" /><rect x="269" y="171" width="67" height="25" rx="3" stroke="light-dark(#a3a29e, #555)" /></g>
     </svg>
     <div class="grid-art-caption"><span class="art-brand"><img src="/grid/tagflow.svg" width="24" height="24" alt="" />Tagflow</span><span>HTML → native widgets</span></div>
-  </>}
-  {kind === 'bonsai' && <>
-    <svg class="bonsai-branches" viewBox="0 0 400 270" fill="none">
-      <g class="bonsai-left art-piece">
-        <path d="M200 207v-32q0-29-38-29h-46v-34" class="art-wire"/>
-        <rect x="65" y="58" width="102" height="57" rx="6" class="art-paper"/>
-        <text x="78" y="80" class="art-type">feature</text><path d="M78 96h47" class="art-wire"/>
-        <circle cx="145" cy="96" r="3" class="art-ink"/>
-      </g>
-      <g class="bonsai-right art-piece">
-        <path d="M200 207v-32q0-29 38-29h46v-34" class="art-wire"/>
-        <rect x="233" y="58" width="102" height="57" rx="6" class="art-paper"/>
-        <text x="246" y="80" class="art-type">worktree</text><path d="M246 96h47" class="art-wire"/>
-        <circle cx="313" cy="96" r="3" class="art-ink"/>
-      </g>
-      <path d="M200 207v-59" class="art-wire"/>
-      <g class="bonsai-main art-piece"><rect x="149" y="94" width="102" height="57" rx="6" class="art-paper"/>
-        <text x="163" y="117" class="art-type">main</text><path d="M163 134h47" class="art-wire"/><circle cx="229" cy="134" r="3" class="art-ink"/>
-      </g>
-      <circle cx="200" cy="207" r="7" class="art-paper"/><circle cx="200" cy="207" r="2" class="art-ink"/>
-      <text x="200" y="234" text-anchor="middle" class="art-small">One repository. Room to branch.</text>
-    </svg>
-    <div class="grid-art-caption"><span>Bonsai</span><span>Native Git for macOS</span></div>
   </>}
   {kind === 'gpuicn' && <>
     <svg viewBox="0 0 400 270" fill="none">

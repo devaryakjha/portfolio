@@ -7,7 +7,7 @@ const fullDate = (date: string) => format(date, { day: '2-digit', month: 'short'
 const months = activity.days.flatMap((day, index) => {
   if (index > 0 && day.date.slice(0, 7) === activity.days[index - 1].date.slice(0, 7)) return [];
   return [{ week: Math.min(25, Math.floor(index / 7) + 1), name: format(day.date, { month: 'short' }) }];
-});
+}).filter((m, index, all) => !all[index + 1] || all[index + 1].week - m.week >= 2); // A partial first month would overlap the next label.
 ---
 <section class="workbench" id="workbench" aria-labelledby="workbench-title">
   <header class="grid-section-heading"><h2 id="workbench-title">On the workbench<span> / lately</span></h2><span>A few things taking shape.</span></header>
@@ -27,8 +27,9 @@ const months = activity.days.flatMap((day, index) => {
       <div class="bench-legend"><span class="bench-scale" aria-label="Less to more contributions"><span>Less</span>{[0,1,2,3,4].map(level => <i data-level={level} aria-hidden="true"></i>)}<span>More</span></span></div>
       <div class="bench-now">
         <span class="bench-label">CURRENTLY EXPLORING</span>
-        <p>Making Flutter releases feel a little less complicated.</p>
-        <a href="https://oore.build">Oore CI <span aria-hidden="true">↗</span></a>
+        <p>One reader for books and comics, on every screen.</p>
+        <a href="https://chek.page">Chek <span aria-hidden="true">↗</span></a>
+        <div class="bench-exploring-next"><p>Making Flutter releases feel a little less complicated.</p><a href="https://oore.build">Oore CI <span aria-hidden="true">↗</span></a></div>
         <div class="bench-exploring-next"><p>Building native UI components with GPUI.</p><a href="https://ui.imajha.com">gpuicn <span aria-hidden="true">↗</span></a></div>
       </div>
     </div>

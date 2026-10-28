@@ -23,7 +23,6 @@ Square image, centered head, 10% margin. A simple personal developer avatar.
 
 - Oore: original mark from `oore.build/shared/brand/logo.svg`. Rendered in white with CSS; source geometry unchanged.
 - Tagflow: original mark from `tagflow/assets/dark/icon.svg`. Rendered in grayscale with CSS.
-- Bonsai: supplied worktree mark from `devaryakjha/work/project-logos/bonsai.svg`.
 - Loadwright: original diagram of its YAML-to-JMeter workflow, based on the profile README.
 - Anpec: original phone/chip diagram of Android performance classes, based on https://github.com/devaryakjha/anpec.
 - Seisei: original diagram of model output passing through a schema into typed app data, based on its local README.
