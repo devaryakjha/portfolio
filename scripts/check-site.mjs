@@ -8,7 +8,8 @@ import vm from 'node:vm';
 const root = path.resolve('dist');
 const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('.html'));
 const work = JSON.parse(fs.readFileSync('src/data/work.snapshot.json', 'utf8'));
-assert.equal(pages.length, 6 + work.length, 'Home, about, projects, writing, two posts, and 404');
+const posts = fs.readdirSync('src/content/blog').filter(file => file.endsWith('.md'));
+assert.equal(pages.length, 4 + posts.length + work.length, 'Home, about, projects, writing, posts, and 404');
 assert.ok(!fs.existsSync(path.join(root, 'explore')), 'No preview routes');
 const socialImages = new Set();
 for (const slug of ['oore-build', 'chek', 'tagflow', 'gpuicn', 'anpec', 'seisei']) {

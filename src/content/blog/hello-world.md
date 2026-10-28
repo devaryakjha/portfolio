@@ -1,4 +1,5 @@
 ---
+summary: "A first note, and a place to share what I learn."
 excerpt: "Welcome to my corner of the internet! I'm Aryakumar Jha, a passionate software engineer with a love for all things technology-related. Join me on this blogging adventure as we explore the fascinating world of software engineering together."
 title: "Hello World!"
 shortTitle: "Hello World!"

@@ -1,4 +1,5 @@
 ---
+summary: "Why I built a self-hosted release workflow for Flutter, and why I’m sharing it."
 excerpt: "I built Oore CI for my own Flutter release workflow, and I am now opening it up in public alpha for anyone dealing with similar mobile CI pain."
 title: "Oore CI Is Public Alpha"
 shortTitle: "Oore CI Alpha"
