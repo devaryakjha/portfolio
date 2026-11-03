@@ -1,6 +1,9 @@
 ---
-import activity from '../../public/github-contributions.json';
+import snapshot from '../../public/github-contributions.json';
 import '../styles/workbench.css';
+// Read only the calendar fields, so a snapshot with extra keys still renders.
+type Activity = { username: string; from: string; to: string; updatedAt: string; days: { date: string; count: number; level: number }[] };
+const activity: Activity = snapshot;
 const format = (date: string, options: Intl.DateTimeFormatOptions) => new Date(date).toLocaleDateString('en-GB', { ...options, timeZone: 'UTC' });
 const month = (date: string) => format(date, { month: 'short', year: 'numeric' });
 const fullDate = (date: string) => format(date, { day: '2-digit', month: 'short', year: 'numeric' });
@@ -25,22 +28,13 @@ const months = activity.days.flatMap((day, index) => {
         </div>
       </div>
       <div class="bench-legend"><span class="bench-scale" aria-label="Less to more contributions"><span>Less</span>{[0,1,2,3,4].map(level => <i data-level={level} aria-hidden="true"></i>)}<span>More</span></span></div>
-      <div class="bench-now">
-        <span class="bench-label">CURRENTLY EXPLORING</span>
-        <p>One reader for books and comics, on every screen.</p>
-        <a href="https://chek.page">Chek <span aria-hidden="true">↗</span></a>
-        <div class="bench-exploring-next"><p>Making Flutter releases feel a little less complicated.</p><a href="https://oore.build">Oore CI <span aria-hidden="true">↗</span></a></div>
-        <div class="bench-exploring-next"><p>Building native UI components with GPUI.</p><a href="https://ui.imajha.com">gpuicn <span aria-hidden="true">↗</span></a></div>
-      </div>
     </div>
-    <div class="bench-feed">
-      <div class="bench-label"><span>RECENT PUBLIC COMMITS</span><a href="https://github.com/devaryakjha">View GitHub ↗</a></div>
-      {activity.commits.map(commit => <a class="bench-event" href={commit.url}>
-        <span class="bench-event-mark" aria-hidden="true">↗</span>
-        <span><span class="bench-event-meta">{commit.repo.split('/')[1]} <span>· commit</span></span><strong>{commit.title}</strong><time class="bench-event-date" datetime={commit.date}>{fullDate(commit.date)}</time></span>
-        <span class="bench-open" aria-hidden="true">↗</span>
-      </a>)}
-      {activity.commits.length === 0 && <p>No recent public commits. More on GitHub.</p>}
+    <div class="bench-now">
+      <span class="bench-label">CURRENTLY EXPLORING</span>
+      <p>One reader for books and comics, on every screen.</p>
+      <a href="https://chek.page">Chek <span aria-hidden="true">↗</span></a>
+      <div class="bench-exploring-next"><p>Making Flutter releases feel a little less complicated.</p><a href="https://oore.build">Oore CI <span aria-hidden="true">↗</span></a></div>
+      <div class="bench-exploring-next"><p>Building native UI components with GPUI.</p><a href="https://ui.imajha.com">gpuicn <span aria-hidden="true">↗</span></a></div>
     </div>
   </div>
   <p class="bench-updated">From GitHub · updated <time datetime={activity.updatedAt}>{fullDate(activity.updatedAt)}</time></p>

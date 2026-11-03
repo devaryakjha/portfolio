@@ -31,7 +31,7 @@ img,svg { max-width: 100%; display: block; }
 .grid .monogram { border: 1px solid light-dark(#a3a29e, #555); padding: 8px 15px 12px 9px; font-size: 25px; letter-spacing: -4px; }
 .grid .identity-name { font: 12px 'Courier New',monospace; }
 .grid .site-header nav { font: 11px 'Courier New',monospace; }
-.grid-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; padding: 65px 4.5% 55px; }
+.grid-hero { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; padding: 65px 4.5% 55px; border-bottom: 1px solid light-dark(#d3d2ce, #333); }
 .grid .small-label { color: light-dark(#62615d, #929292); }
 .status-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: light-dark(#1c1b19, #eee); margin-right: 9px; vertical-align: middle; }
 .grid-hero h1 { font-size: clamp(44px,5.3vw,80px); font-weight: 500; letter-spacing: -.07em; line-height: 1.04; margin: 36px 0 28px; }
@@ -42,8 +42,6 @@ img,svg { max-width: 100%; display: block; }
 .system-art { background-image: radial-gradient(light-dark(#c1c0bc, #444) 1px,transparent 1px); background-size: 20px 20px; display: flex; flex-direction: column; color: light-dark(#53524e, #aaa); padding: 17px; border: 1px solid light-dark(#d3d2ce, #333); align-self: stretch; }
 .system-coordinates { display: flex; justify-content: space-between; gap: 15px; font: 9px 'Courier New',monospace; color: light-dark(#62615d, #888); }
 .system-coordinates:last-child { margin-top: auto; }
-.grid-ticker { display: grid; grid-template-columns: repeat(4,1fr); border-block: 1px solid light-dark(#d3d2ce, #333); font: 11px 'Courier New',monospace; color: light-dark(#53524e, #aaa); }
-.grid-ticker span { padding: 18px 10px; text-align: center; border-right: 1px solid light-dark(#d3d2ce, #333); }
 .grid-work { padding: 60px 4.5% 0; }
 .grid-section-heading { display: flex; justify-content: space-between; gap: 25px; margin-bottom: 25px; }
 .grid-section-heading h2 { font: 14px 'Courier New',monospace; }
@@ -96,7 +94,6 @@ img,svg { max-width: 100%; display: block; }
 .reading-body .device-phone img { border: 0; border-radius: 16cqw 16cqw 0 0; }
 .reading-body .device-browser img { border: 0; border-radius: 0; }
 .reading-body .post-credits { color: light-dark(#62615d, #aaa); font: 11px/1.6 'Courier New', monospace; }
-.reading-end { max-width: 650px; margin: 65px 0 0 auto; padding-top: 30px; border-top: 1px solid light-dark(#53524e, #aaa); font-size: 14px; line-height: 2; }
 .case-header { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin: 25px 0 50px; }
 .case-header h1 { font-size: clamp(65px,11vw,155px); font-weight: 500; letter-spacing: -.075em; line-height: 1; margin: 20px 0; }
 .case-summary { font-size: 23px; color: light-dark(#686763, #777); letter-spacing: -.5px; }
@@ -120,7 +117,6 @@ img,svg { max-width: 100%; display: block; }
 .grid .reading-meta { flex-wrap: wrap; }
 .grid .reading-body { max-width: none; font-size: 16px; color: light-dark(#41403d, #bbb); }
 .grid .reading-body h2 { color: light-dark(#1c1b19, #eee); font: 500 23px/1.3 'Courier New',monospace; letter-spacing: -1px; }
-.grid .reading-end { border-color: light-dark(#c1c0bc, #444); font-family: 'Courier New',monospace; font-size: 12px; }
 .grid .case-header h1 { font-family: 'Courier New',monospace; font-size: clamp(44px,8vw,110px); }
 .grid .case-study>.art { border: 1px solid light-dark(#d3d2ce, #333); background-image: radial-gradient(light-dark(#d3d2ce, #333) 1px,transparent 1px); background-size: 18px 18px; }
 .grid .case-body section { border-top: 1px solid light-dark(#d3d2ce, #333); padding-top: 25px; }
@@ -141,9 +137,7 @@ img,svg { max-width: 100%; display: block; }
  .grid .identity-name { display: none; }
  .grid-hero { grid-template-columns: 1fr; padding: 40px 22px; gap: 40px; }
  .grid-hero h1 { font-size: clamp(43px,10vw,65px); }
- .grid-ticker { grid-template-columns: repeat(2,1fr); font-size: 9px; }
- .grid-ticker span { border-bottom: 1px solid light-dark(#d3d2ce, #333); }
- .grid-work { padding: 40px 22px 0; }
+   .grid-work { padding: 40px 22px 0; }
  .grid-section-heading { flex-direction: column; gap: 10px; }
  .grid-projects { grid-template-columns: 1fr; }
  .grid-bottom { grid-template-columns: 1fr; gap: 50px; padding: 50px 22px; }

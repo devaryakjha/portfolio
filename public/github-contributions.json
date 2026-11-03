@@ -909,25 +909,5 @@
       "count": 0,
       "level": 0
     }
-  ],
-  "commits": [
-    {
-      "repo": "devaryakjha/shiken",
-      "title": "fix: update Autopilot link in README",
-      "url": "https://github.com/devaryakjha/shiken/commit/0a77608423dd2b5b13714d9f7e73c2447a8e04ce",
-      "date": "2026-09-23T13:33:51.000+05:30"
-    },
-    {
-      "repo": "devaryakjha/shiken",
-      "title": "docs: add initial project direction",
-      "url": "https://github.com/devaryakjha/shiken/commit/51b2621a2c33fbe4dbc067de9d140fff0504ba71",
-      "date": "2026-09-23T13:29:16.000+05:30"
-    },
-    {
-      "repo": "devaryakjha/shiken",
-      "title": "Initial commit",
-      "url": "https://github.com/devaryakjha/shiken/commit/1bf4bdeb0bc0a689638520c57e42388325997c16",
-      "date": "2026-09-23T13:28:48.000+05:30"
-    }
   ]
 }
