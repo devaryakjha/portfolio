@@ -40,7 +40,8 @@ const icon = await sharp(path.join(root, 'apple-touch-icon.png')).metadata();
 assert.deepEqual([icon.width, icon.height], [180, 180], 'Home-screen icon dimensions');
 const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 // Profile and article markup must describe the same person and resolve to the canonical domain.
-const readSchema = html => JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] ?? 'null');
+const readSchemas = html => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m => JSON.parse(m[1]));
+const readSchema = html => readSchemas(html)[0] ?? null;
 assert.equal(readSchema(home)['@type'], 'WebSite');
 const about = fs.readFileSync(path.join(root, 'about/index.html'), 'utf8');
 const profile = readSchema(about);
@@ -48,11 +49,42 @@ assert.equal(profile['@type'], 'ProfilePage');
 assert.equal(profile.mainEntity.name, 'Aryakumar Jha');
 assert.deepEqual(profile.mainEntity.alternateName, ['Arya Jha', 'Arya Kumar Jha', 'devaryakjha']);
 assert.equal(profile.mainEntity.url, 'https://aryak.dev/about');
+assert.deepEqual(profile.mainEntity.knowsAbout, ['Flutter', 'Dart', 'Swift', 'Rust', 'iOS', 'Go']);
 for (const page of pages.filter(p => /^blog\/.+\/index.html$/.test(p))) {
-  const schema = readSchema(fs.readFileSync(path.join(root, page), 'utf8'));
+  const html = fs.readFileSync(path.join(root, page), 'utf8');
+  const [schema, breadcrumbs] = readSchemas(html);
   assert.equal(schema['@type'], 'BlogPosting');
   assert.equal(schema.author['@id'], profile.mainEntity['@id']);
+  assert.equal(schema.publisher['@id'], profile.mainEntity['@id']);
+  assert.ok(schema.dateModified && schema.mainEntityOfPage, `${page}: modified date and main entity`);
+  assert.equal(breadcrumbs['@type'], 'BreadcrumbList');
+  assert.deepEqual(breadcrumbs.itemListElement.map(item => item.name).slice(0, 2), ['Home', 'Writing']);
+  for (const property of ['published_time', 'modified_time', 'author']) assert.ok(html.includes(`property="article:${property}"`), `${page}: article:${property}`);
 }
+// Apps are SoftwareApplication; libraries and packages are SoftwareSourceCode.
+for (const project of work) {
+  const html = fs.readFileSync(path.join(root, 'projects', project.slug, 'index.html'), 'utf8');
+  const [schema, breadcrumbs] = readSchemas(html);
+  assert.equal(schema['@type'], ['chek', 'oore-build'].includes(project.slug) ? 'SoftwareApplication' : 'SoftwareSourceCode', `${project.slug}: structured data type`);
+  assert.equal(schema.name, project.name);
+  assert.equal(schema.author['@id'], profile.mainEntity['@id']);
+  if (schema['@type'] === 'SoftwareSourceCode') assert.equal(schema.codeRepository, project.source);
+  assert.deepEqual(breadcrumbs.itemListElement.map(item => item.name), ['Home', 'Work', project.name]);
+  assert.ok(html.includes(`<title>${project.name}: `), `${project.slug}: descriptive title`);
+}
+// Feeds and discovery files.
+const postSlugs = posts.map(file => file.slice(0, -3));
+assert.ok(home.includes('rel="alternate" type="application/rss+xml"'), 'RSS feed is advertised');
+const rss = fs.readFileSync(path.join(root, 'rss.xml'), 'utf8');
+for (const slug of postSlugs) assert.ok(rss.includes(`<link>https://aryak.dev/blog/${slug}</link>`), `RSS lists ${slug}`);
+assert.equal((rss.match(/<content:encoded>/g) || []).length, postSlugs.length, 'RSS carries full posts');
+assert.ok(!/(?:src|href)=&quot;\//.test(rss), 'RSS links are absolute');
+const llms = fs.readFileSync(path.join(root, 'llms.txt'), 'utf8');
+assert.ok(llms.startsWith('# Aryakumar Jha\n'));
+for (const project of work) assert.ok(llms.includes(`(https://aryak.dev/projects/${project.slug})`), `llms.txt lists ${project.slug}`);
+for (const slug of postSlugs) assert.ok(llms.includes(`(https://aryak.dev/blog/${slug})`), `llms.txt lists ${slug}`);
+const headers = fs.readFileSync(path.join(root, '_headers'), 'utf8');
+assert.ok(headers.includes('/_astro/*') && headers.includes('immutable') && headers.includes('X-Content-Type-Options: nosniff'), 'Pages headers');
 assert.ok(fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8').includes('https://aryak.dev/about'));
 // Exercise the real theme script with system preferences and unavailable storage.
 const themeScript = fs.readFileSync('src/scripts/theme.js', 'utf8');
@@ -114,4 +146,6 @@ for (const day of activity.days) {
   assert.ok(home.replaceAll("Sept", "Sep").includes(`data-detail="${date.replace("Sept", "Sep")} · ${day.count} contribution${day.count === 1 ? '' : 's'}"`));
 }
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
+assert.equal((sitemap.match(/<lastmod>/g) || []).length, (sitemap.match(/<loc>/g) || []).length, 'Every sitemap URL has lastmod');
+assert.ok(!home.includes('bench-feed') && !home.includes('grid-ticker'), 'Removed home sections stay removed');
 console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and ${work.length} project artworks.`);

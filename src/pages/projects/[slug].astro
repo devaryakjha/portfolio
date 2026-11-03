@@ -5,7 +5,38 @@ import Artwork from '../../components/ProjectArtwork.astro';
 import ProjectWalkthrough from '../../components/ProjectWalkthrough.astro';
 import OoreWalkthrough from '../../components/OoreWalkthrough.astro';
 import ChekWalkthrough from '../../components/ChekWalkthrough.astro';
+import { site, person } from '../../data/site';
 export function getStaticPaths() { return work.map(project=>({params:{slug:project.slug},props:{project}})); }
 const { project: p } = Astro.props;
+const pageUrl = `${site.url}/projects/${p.slug}`;
+// Licenses as published in each repository's LICENSE file; unknown projects omit the field.
+const licenses: Record<string, string> = { 'oore-build': 'MIT', chek: 'AGPL-3.0-only', tagflow: 'MIT', gpuicn: 'MIT', anpec: 'MIT', seisei: 'MIT' };
+// Shipped apps are applications; the rest are libraries and packages people build with.
+const applications: Record<string, { operatingSystem: string; applicationCategory: string }> = {
+  chek: { operatingSystem: 'iOS, iPadOS, Web', applicationCategory: 'BookApplication' },
+  'oore-build': { operatingSystem: 'macOS', applicationCategory: 'DeveloperApplication' },
+};
+const runtimes: Record<string, string> = { tagflow: 'Flutter', gpuicn: 'Rust, GPUI', anpec: 'Flutter, Android', seisei: 'Dart, Flutter' };
+const app = applications[p.slug];
+const license = licenses[p.slug] && `https://spdx.org/licenses/${licenses[p.slug]}.html`;
+const structuredData = [{
+  '@context': 'https://schema.org',
+  '@type': app ? 'SoftwareApplication' : 'SoftwareSourceCode',
+  name: p.name,
+  description: p.description,
+  url: p.href,
+  mainEntityOfPage: pageUrl,
+  ...(app ?? { programmingLanguage: p.language.split(' / '), codeRepository: p.source, ...(runtimes[p.slug] && { runtimePlatform: runtimes[p.slug] }) }),
+  ...(license && { license }),
+  author: person,
+}, {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Work', item: `${site.url}/#work` },
+    { '@type': 'ListItem', position: 3, name: p.name, item: pageUrl },
+  ],
+}];
 ---
-<SiteLayout ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a></div></header><Artwork kind={p.slug} name={p.name} />{p.slug === 'oore-build' ? <OoreWalkthrough /> : p.slug === 'chek' ? <ChekWalkthrough /> : <ProjectWalkthrough project={p} />}</article></SiteLayout>
+<SiteLayout structuredData={structuredData} ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name}: ${p.short.replace(/\.$/, '')} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a></div></header><Artwork kind={p.slug} name={p.name} />{p.slug === 'oore-build' ? <OoreWalkthrough /> : p.slug === 'chek' ? <ChekWalkthrough /> : <ProjectWalkthrough project={p} />}</article></SiteLayout>
