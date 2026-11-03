@@ -1,8 +1,9 @@
 name: Publish portfolio
 
 on:
+  pull_request:
   push:
-    branches: [main, 'codex/**']
+    branches: [main]
   schedule:
     - cron: '7 0 * * *'
   workflow_dispatch:
@@ -16,13 +17,26 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: portfolio-publish-${{ github.ref_name }}
-  cancel-in-progress: false
-
 jobs:
-  publish:
+  # Builds and checks the committed snapshots, so pull requests need no secrets.
+  check:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run build
+      - run: bun run check
+
+  publish:
+    needs: check
+    # Scheduled and dispatched runs skip the check job; a failed check stops a push from publishing.
+    if: ${{ !cancelled() && needs.check.result != 'failure' && github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    concurrency:
+      group: portfolio-publish-${{ github.ref_name }}
+      cancel-in-progress: false
     env:
       EMDASH_URL: ${{ vars.EMDASH_URL }}
       EMDASH_TOKEN: ${{ secrets.EMDASH_TOKEN }}
@@ -56,15 +70,14 @@ jobs:
         if: github.event_name == 'workflow_dispatch' || steps.published.outputs.cache-hit != 'true'
         run: |
           bun run build
-          bun scripts/check-site.mjs
-          bunx tsc --noEmit
+          bun run check
       - name: Publish static files to Pages
         if: github.event_name == 'workflow_dispatch' || steps.published.outputs.cache-hit != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           DEPLOYMENT_BRANCH: ${{ github.ref_name }}
-        run: bunx wrangler@4.143.1 pages deploy dist --project-name portfolio --branch "$DEPLOYMENT_BRANCH"
+        run: bunx wrangler pages deploy dist --project-name portfolio --branch "$DEPLOYMENT_BRANCH"
       - name: Remember published snapshot
         if: steps.published.outputs.cache-hit != 'true'
         run: touch .deployment-marker
