@@ -26,22 +26,26 @@ days.forEach((day, index) => {
   assert(Number.isSafeInteger(day.count) && day.count >= 0 && day.level >= 0);
 });
 
-// The latest release of each listed project. A repository without releases is left out; any other
-// failure keeps that project's entry from the previous snapshot, so one bad request doesn't blank the list.
+// The newest published release of each listed project, prereleases included: Oore's alphas and
+// Tagflow's betas are its real releases, and GitHub's "latest" would pick an old stable sub-package
+// tag over them. A repository without releases is left out; any other failure keeps that project's
+// entry from the previous snapshot, so one bad request doesn't blank the list.
 const output = new URL('../public/github-activity.json', import.meta.url);
 const previous = existsSync(output) ? JSON.parse(readFileSync(output, 'utf8')).releases ?? [] : [];
 const releases = [];
 for (const project of readProjects()) {
   const repo = new URL(project.source).pathname.match(/^\/([\w.-]+\/[\w.-]+?)(?:\.git)?\/?$/)?.[1];
   assert(new URL(project.source).hostname === 'github.com' && repo, `${project.slug}: source is not a GitHub repository`);
-  const result = spawnSync('gh', ['api', `repos/${repo}/releases/latest`], { encoding: 'utf8' });
+  const result = spawnSync('gh', ['api', `repos/${repo}/releases?per_page=30`], { encoding: 'utf8' });
   if (result.status !== 0) {
-    if (/HTTP 404/.test(result.stderr)) continue;
-    console.warn(`${project.slug}: could not read the latest release of ${repo}; keeping the previous entry.`);
+    console.warn(`${project.slug}: could not list releases of ${repo}; keeping the previous entry.`);
     releases.push(...previous.filter(release => release.slug === project.slug));
     continue;
   }
-  const release = JSON.parse(result.stdout);
+  const release = JSON.parse(result.stdout)
+    .filter(item => !item.draft && item.published_at)
+    .sort((a, b) => b.published_at.localeCompare(a.published_at))[0];
+  if (!release) continue;
   releases.push({ slug: project.slug, name: project.name, tag: release.tag_name, title: release.name || release.tag_name, date: release.published_at, url: release.html_url });
 }
 releases.sort((a, b) => b.date.localeCompare(a.date));
