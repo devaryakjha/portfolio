@@ -3,7 +3,9 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import matter from 'gray-matter';
 import sharp from 'sharp';
-import { work } from '../src/data/work.ts';
+import { readProjects } from './projects.mjs';
+
+const work = readProjects();
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[char]));
 function lines(title) {

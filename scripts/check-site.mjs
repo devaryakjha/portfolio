@@ -3,11 +3,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 import vm from 'node:vm';
+import { readProjects } from './projects.mjs';
 
 // Run after bun run build.
 const root = path.resolve('dist');
 const pages = fs.readdirSync(root, { recursive: true }).filter(p => p.endsWith('.html'));
-const work = JSON.parse(fs.readFileSync('src/data/work.snapshot.json', 'utf8'));
+const work = readProjects();
+const drafts = readProjects({ includeDrafts: true }).filter(project => project.draft);
 const posts = fs.readdirSync('src/content/blog').filter(file => file.endsWith('.md'));
 assert.equal(pages.length, 4 + posts.length + work.length, 'Home, about, projects, writing, posts, and 404');
 const socialImages = new Set();
@@ -83,6 +85,11 @@ const llms = fs.readFileSync(path.join(root, 'llms.txt'), 'utf8');
 assert.ok(llms.startsWith('# Aryakumar Jha\n'));
 for (const project of work) assert.ok(llms.includes(`(https://aryak.dev/projects/${project.slug})`), `llms.txt lists ${project.slug}`);
 for (const slug of postSlugs) assert.ok(llms.includes(`(https://aryak.dev/blog/${slug})`), `llms.txt lists ${slug}`);
+for (const { slug } of drafts) {
+  // Drafts are unlisted everywhere: no page, card, social image, feed or sitemap entry.
+  assert.ok(!fs.existsSync(path.join(root, 'projects', slug)), `${slug}: draft has no page or social image`);
+  assert.ok(!llms.includes(`/projects/${slug}`), `${slug}: draft stays out of llms.txt`);
+}
 const headers = fs.readFileSync(path.join(root, '_headers'), 'utf8');
 assert.ok(headers.includes('/_astro/*') && headers.includes('immutable') && headers.includes('X-Content-Type-Options: nosniff'), 'Pages headers');
 assert.ok(fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8').includes('https://aryak.dev/about'));
@@ -146,6 +153,7 @@ for (const day of activity.days) {
   assert.ok(home.replaceAll("Sept", "Sep").includes(`data-detail="${date.replace("Sept", "Sep")} · ${day.count} contribution${day.count === 1 ? '' : 's'}"`));
 }
 const sitemap = fs.readFileSync(path.join(root, 'sitemap-0.xml'), 'utf8');
+for (const { slug } of drafts) assert.ok(!sitemap.includes(`/projects/${slug}<`) && !home.includes(`/projects/${slug}"`), `${slug}: draft stays out of the sitemap and home grid`);
 assert.equal((sitemap.match(/<lastmod>/g) || []).length, (sitemap.match(/<loc>/g) || []).length, 'Every sitemap URL has lastmod');
 assert.ok(!home.includes('bench-feed') && !home.includes('grid-ticker'), 'Removed home sections stay removed');
 console.log(`Checked ${pages.length} pages, local links/assets, canonical URLs, sitemap, social previews, and ${work.length} project artworks.`);
