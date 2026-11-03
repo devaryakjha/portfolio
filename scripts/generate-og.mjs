@@ -16,7 +16,15 @@ function lines(title) {
   assert.ok(result.length <= 3 && result.every(line => line.length <= 23), `Social title is too long: ${title}. Supply a shorter title.`);
   return result;
 }
+// The subtitle line fits about 90 monospace characters beside the location.
+function clip(text, max = 88) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ')).replace(/[\s,.;:–—-]+$/, '')}…`;
+}
 assert.equal(escape('A & <B>'), 'A &amp; &lt;B&gt;');
+assert.equal(clip('short'), 'short');
+assert.ok(clip('word '.repeat(40)).length <= 88);
 assert.deepEqual(lines('From the interface. To the internals.'), ['From the interface. To', 'the internals.']);
 
 const media = JSON.parse(await fs.readFile('src/data/media.snapshot.json', 'utf8'));
@@ -45,14 +53,14 @@ async function generate(file, label, title, subtitle) {
 }
 
 await generate('og.png', 'Software engineer / Zerodha', ['From the interface.', 'To the internals.'], 'Native apps. Developer tools. Open source.');
-await generate('blog/og.png', 'Writing / Aryakumar Jha', 'Field notes_', 'On making software and learning along the way.');
+await generate('blog/og.png', 'Writing / Aryakumar Jha', 'Writing_', 'On making software and learning along the way.');
 for (const project of work) {
   await generate(`projects/${project.slug}/og.png`, `${project.category} / ${project.language}`, project.name, project.short);
 }
 for (const file of (await fs.readdir('src/content/blog')).filter(file => file.endsWith('.md'))) {
   const slug = file.slice(0, -3);
   const { data } = matter(await fs.readFile(path.join('src/content/blog', file), 'utf8'));
-  await generate(`blog/${slug}/og.png`, `Field notes / ${String(data.date).slice(0, 4)}`, data.shortTitle || data.title, 'Writing by Aryakumar Jha');
+  await generate(`blog/${slug}/og.png`, `Writing / ${new Date(data.date).getUTCFullYear()}`, data.shortTitle || data.title, clip(data.description));
   // Preserve previously published Twitter image URLs; both platforms use one composition.
   await fs.copyFile(`public/blog/${slug}/og.png`, `public/blog/${slug}/twitter.png`);
 }

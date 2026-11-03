@@ -1,3 +1,0 @@
-## NOTE: This repo is deployed as a static site (Astro on Cloudflare Pages).
-## Git LFS adds friction in CI and can break builds when LFS quota is exceeded.
-## Keep common web assets stored directly in git.

@@ -12,3 +12,4 @@
 /api/varanasi https://varanasi-backend.vercel.app/ 308
 /api/varanasi/* https://varanasi-backend.vercel.app/:splat 308
 
+/blog/hello-world /blog 301
