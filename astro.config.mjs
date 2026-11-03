@@ -5,8 +5,10 @@ import sitemap from "@astrojs/sitemap";
 import astroExpressiveCode from "astro-expressive-code";
 import matter from "gray-matter";
 
-// Posts report when they last changed; every other page changes with each build.
-const buildDate = new Date();
+import { execFileSync } from "node:child_process";
+// Posts report when they last changed; every other page reports the last commit, so a
+// rebuild of the same commit (the daily publish) doesn't tell crawlers everything moved.
+const buildDate = new Date(execFileSync("git", ["log", "-1", "--format=%cI"], { encoding: "utf8" }).trim() || Date.now());
 const blogDir = "src/content/blog";
 const postDates = new Map(
   fs.readdirSync(blogDir).filter((file) => file.endsWith(".md")).map((file) => {
