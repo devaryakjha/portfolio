@@ -48,3 +48,13 @@
 .bench-tooltip span { display:block; opacity:.8; }
 
 .bench-exploring-next { margin-top:20px; } .bench-exploring-next a { font:11px ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; text-decoration:none; } .bench-exploring-next a:hover { text-decoration:underline; }
+
+/* Latest releases sit under the calendar, one row per project. */
+.bench-releases { margin-top:26px; padding-top:22px; border-top:1px solid light-dark(#d3d2ce,#333); }
+.bench-releases ul { list-style:none; margin:12px 0 0; padding:0; }
+.bench-releases li + li { border-top:1px solid light-dark(#e3e2dd,#262626); }
+.bench-releases a { display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:18px; align-items:baseline; padding:10px 0; text-decoration:none; }
+.bench-release-name { font-size:15px; letter-spacing:-.2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.bench-release-tag,.bench-releases time { font:11px ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; color:light-dark(#62615d,#999); white-space:nowrap; }
+@media(hover:hover) { .bench-releases a:hover .bench-release-name { text-decoration:underline; text-underline-offset:4px; } }
+@media(max-width:400px) { .bench-releases a { gap:12px; } }

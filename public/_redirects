@@ -13,3 +13,4 @@
 /api/varanasi/* https://varanasi-backend.vercel.app/:splat 308
 
 /blog/hello-world /blog 301
+/projects/seisei / 301

@@ -49,6 +49,10 @@ img,svg { max-width: 100%; display: block; }
 .grid-section-heading > span { font: 10px ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; color: light-dark(#5f5e5a, #999); }
 .grid-projects { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); border-top: 1px solid light-dark(#d3d2ce, #333); border-left: 1px solid light-dark(#d3d2ce, #333); }
 .grid-projects article { min-width: 0; border-right: 1px solid light-dark(#d3d2ce, #333); border-bottom: 1px solid light-dark(#d3d2ce, #333); }
+/* A row left short by an unlisted project ends in a pointer to GitHub instead of a hole. */
+.grid-more { display: flex; flex-direction: column; justify-content: flex-end; gap: 14px; padding: 23px; min-width: 0; text-decoration: none; border-right: 1px solid light-dark(#d3d2ce, #333); border-bottom: 1px solid light-dark(#d3d2ce, #333); }
+.grid-more > span:not(.small-label) { color: light-dark(#5f5e5a, #999); font-size: 13px; line-height: 1.6; }
+.grid-more strong { font: 11px ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace; font-weight: 400; }
 .grid-art-link { display: block; text-decoration: none; }
 .art-grid { background: light-dark(#efeeeb, #111); color: light-dark(#5f5e5a, #999); min-height: 245px; border-bottom: 1px solid light-dark(#d3d2ce, #333); }
 .grid-project-info { padding: 23px; }

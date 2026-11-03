@@ -1,12 +1,8 @@
 ---
-import snapshot from '../../public/github-contributions.json';
+import { activity, formatDate as format } from '../data/activity';
 import '../styles/workbench.css';
-// Read only the calendar fields, so a snapshot with extra keys still renders.
-type Activity = { username: string; from: string; to: string; updatedAt: string; days: { date: string; count: number; level: number }[] };
-const activity: Activity = snapshot;
-const format = (date: string, options: Intl.DateTimeFormatOptions) => new Date(date).toLocaleDateString('en-GB', { ...options, timeZone: 'UTC' });
 const month = (date: string) => format(date, { month: 'short', year: 'numeric' });
-const fullDate = (date: string) => format(date, { day: '2-digit', month: 'short', year: 'numeric' });
+const fullDate = (date: string) => format(date);
 const months = activity.days.flatMap((day, index) => {
   if (index > 0 && day.date.slice(0, 7) === activity.days[index - 1].date.slice(0, 7)) return [];
   return [{ week: Math.min(25, Math.floor(index / 7) + 1), name: format(day.date, { month: 'short' }) }];
@@ -28,6 +24,16 @@ const months = activity.days.flatMap((day, index) => {
         </div>
       </div>
       <div class="bench-legend"><span class="bench-scale" aria-label="Less to more contributions"><span>Less</span>{[0,1,2,3,4].map(level => <i data-level={level} aria-hidden="true"></i>)}<span>More</span></span></div>
+      {activity.releases.length > 0 && (
+        <div class="bench-releases">
+          <span class="bench-label">LATEST RELEASES</span>
+          <ul>
+            {activity.releases.map(release => (
+              <li><a href={release.url}><span class="bench-release-name">{release.name}</span><span class="bench-release-tag">{release.tag}</span><time datetime={release.date}>{fullDate(release.date)}</time></a></li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
     <div class="bench-now">
       <span class="bench-label">CURRENTLY EXPLORING</span>

@@ -3,7 +3,10 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import matter from 'gray-matter';
 import sharp from 'sharp';
-import { work } from '../src/data/work.ts';
+import { readProjects } from './projects.mjs';
+import { media } from '../src/data/media.ts';
+
+const work = readProjects();
 
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[char]));
 function lines(title) {
@@ -27,8 +30,7 @@ assert.equal(clip('short'), 'short');
 assert.ok(clip('word '.repeat(40)).length <= 88);
 assert.deepEqual(lines('From the interface. To the internals.'), ['From the interface. To', 'the internals.']);
 
-const media = JSON.parse(await fs.readFile('src/data/media.snapshot.json', 'utf8'));
-const portraitSource = `public${media.portrait.light.original}`;
+const portraitSource = `public${media.portrait.light.src}`;
 const portrait = (await sharp(portraitSource).png().toBuffer()).toString('base64');
 async function generate(file, label, title, subtitle) {
   const titleLines = Array.isArray(title) ? title : lines(title);
