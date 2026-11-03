@@ -1,20 +1,35 @@
 ---
+import { render } from 'astro:content';
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { getAllPosts } from '../../utils/blog';
+import { getAllPosts, lastModified, type BlogPost } from '../../utils/blog';
 import { site, person } from '../../data/site';
 import { formatDate } from '../../utils/date';
-export function getStaticPaths() { return getAllPosts().map(post=>({params:{slug:post.slug},props:{post}})); }
-const { post } = Astro.props;
-const Content = post.Content;
-const structuredData = {
+export async function getStaticPaths() { return (await getAllPosts()).map(post=>({params:{slug:post.id},props:{post}})); }
+const { post } = Astro.props as { post: BlogPost };
+const { Content } = await render(post);
+const url = `${site.url}/blog/${post.id}`;
+const published = post.data.date;
+const modified = lastModified(post);
+const structuredData = [{
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
-  headline: post.frontmatter.title,
-  description: post.frontmatter.excerpt,
-  datePublished: post.frontmatter.date,
-  url: `${site.url}/blog/${post.slug}`,
-  image: `${site.url}/blog/${post.slug}/og.png`,
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: published.toISOString(),
+  dateModified: modified.toISOString(),
+  url,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  image: `${site.url}/blog/${post.id}/og.png`,
   author: person,
-};
+  publisher: person,
+}, {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${site.url}/` },
+    { '@type': 'ListItem', position: 2, name: 'Writing', item: `${site.url}/blog` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: url },
+  ],
+}];
 ---
-<SiteLayout structuredData={structuredData} ogType="article" ogImage={`/blog/${post.slug}/og.png`} description={post.frontmatter.excerpt} title={`${post.frontmatter.title} — Aryakumar Jha`}><article class="reading-page"><header class="reading-header"><a class="back" href="/blog">← All writing</a><div class="reading-meta"><a href="/about" rel="author">Aryakumar Jha</a><time datetime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time></div><h1>{post.frontmatter.title}</h1></header><div class="reading-body"><Content /></div></article></SiteLayout>
+<SiteLayout structuredData={structuredData} ogType="article" article={{ published, modified }} ogImage={`/blog/${post.id}/og.png`} description={post.data.description} title={`${post.data.title} — Aryakumar Jha`}><article class="reading-page"><header class="reading-header"><a class="back" href="/blog">← All writing</a><div class="reading-meta"><a href="/about" rel="author">Aryakumar Jha</a><time datetime={published.toISOString()}>{formatDate(published)}</time></div><h1>{post.data.title}</h1></header><div class="reading-body"><Content /></div></article></SiteLayout>

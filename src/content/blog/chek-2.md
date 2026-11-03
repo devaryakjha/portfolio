@@ -1,10 +1,8 @@
 ---
-summary: "Chek 2.0 is out on the App Store, and Chek now runs on the web."
-excerpt: "Chek 2.0 is out: one reader for books and comics on iPhone, iPad, and the web, with an optional self-hosted server."
 title: "Chek 2.0: Just One More Chapter"
 shortTitle: "Chek 2.0"
+description: "Chek 2.0 is out: one reader for books and comics on iPhone, iPad, and the web, with an optional self-hosted server."
 date: "2026-10-28T21:30:00.000Z"
-tags: "Chek, iOS, Swift, Rust, Self-hosted, Reading"
 ---
 
 <figure class="post-hero">

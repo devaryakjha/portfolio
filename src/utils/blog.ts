@@ -1,45 +1,12 @@
-export type BlogFrontmatter = {
-  excerpt?: string;
-  summary?: string;
-  title: string;
-  shortTitle?: string;
-  date: string;
-  tags?: string;
-};
+import { getCollection, type CollectionEntry } from "astro:content";
 
-type MarkdownModule = {
-  frontmatter: BlogFrontmatter;
-  Content: any;
-};
+export type BlogPost = CollectionEntry<"blog">;
 
-const modules = import.meta.glob("../content/blog/*.md", {
-  eager: true,
-}) as Record<string, MarkdownModule>;
-
-export type BlogPost = {
-  slug: string;
-  frontmatter: BlogFrontmatter;
-  Content: MarkdownModule["Content"];
-};
-
-function toSlug(path: string) {
-  const last = path.split("/").pop() ?? "";
-  return last.replace(/\.md$/, "");
+/** Published posts, newest first. The entry id is the file name, which is the URL slug. */
+export async function getAllPosts(): Promise<BlogPost[]> {
+  const posts = await getCollection("blog");
+  return posts.sort((a, b) => +b.data.date - +a.data.date);
 }
 
-const ALL_POSTS: BlogPost[] = Object.entries(modules)
-  .map(([path, mod]) => ({
-    slug: toSlug(path),
-    frontmatter: mod.frontmatter,
-    Content: mod.Content,
-  }))
-  .filter((p) => Boolean(p.slug))
-  .sort((a, b) => {
-    const ad = +new Date(a.frontmatter.date);
-    const bd = +new Date(b.frontmatter.date);
-    return bd - ad;
-  });
-
-export function getAllPosts() {
-  return ALL_POSTS;
-}
+/** When a post last changed, for feeds, sitemaps and structured data. */
+export const lastModified = (post: BlogPost) => post.data.updated ?? post.data.date;
