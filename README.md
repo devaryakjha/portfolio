@@ -38,19 +38,28 @@ metadata, structured data, feeds, the sticker maths, and types.
 - Posts: `src/content/blog/*.md`, an Astro content collection (see
   `src/content.config.ts`). Frontmatter: `title`, optional `shortTitle`,
   `description`, `date`, and optional `updated`.
-- Editable portrait and screenshots: EmDash Images, snapshotted to `src/data/media.snapshot.json` and `public/cms/`
+- Projects: `src/content/projects/<slug>.md`, a second collection. The file name
+  is the URL slug. Frontmatter: `name`, `short`, `description`, `category`,
+  `language`, `state`, `href` and `source` (https URLs), `problem`, `solution`,
+  `highlights` (a list), `order` (position in the project directory), and
+  `draft`. The body is unused for now.
+- Portrait and Oore screenshots: `public/portrait/` and
+  `public/projects/oore-build/`, listed with their sizes and alt text in
+  `src/data/media.ts`.
 - Code-generated artwork and other static assets: `public/`
-- Published projects: `src/data/work.snapshot.json`, refreshed from the separate EmDash app in `cms/`
+
+`draft: true` unlists a project: it gets no page, home card, social preview,
+sitemap or `llms.txt` entry, and `bun run check` fails if one appears. Seisei is a
+draft for now.
+
+A new project needs custom artwork in `ProjectArtwork.astro` and a walkthrough
+(`ProjectWalkthrough.astro`, or its own component like `OoreWalkthrough.astro`
+and `ChekWalkthrough.astro`). Oore CI, Chek, Tagflow, gpuicn, Anpec, and Seisei
+have both.
 
 The site also publishes `/rss.xml` (full posts), `/llms.txt`, and a sitemap.
 Response headers for Pages live in `public/_headers`, redirects in
 `public/_redirects`.
-
-The public site is fully generated at build time. Editing or reordering a
-published project changes the next build; a visitor never waits for EmDash or D1.
-New projects get a simple default illustration and case study until they get custom
-artwork in `ProjectArtwork.astro` and a walkthrough. Oore CI, Chek, Tagflow, gpuicn,
-Anpec, and Seisei have both.
 
 ## Deployment
 
@@ -58,28 +67,17 @@ Anpec, and Seisei have both.
 deploy command.
 
 - On every pull request and push to `main`, the `check` job installs, builds, and
-  runs `bun run check` against the committed snapshots. It needs no secrets.
-- On pushes to `main`, the daily schedule (00:07 UTC, 05:37 IST), and manual or
-  CMS dispatches, the `publish` job syncs published projects and images from
-  EmDash, refreshes GitHub activity, builds, checks, and uploads `dist` to the
-  `portfolio` Pages project with Wrangler (pinned in `package.json`). It skips the
-  upload when the same commit and snapshots were already published.
+  runs `bun run check` against the committed files. It needs no secrets.
+- On pushes to `main` (after `check` passes), the daily schedule (00:07 UTC,
+  05:37 IST), and manual runs, the `publish` job refreshes GitHub activity,
+  builds, checks, and uploads `dist` to the `portfolio` Pages project with
+  Wrangler (pinned in `package.json`).
 
-Publishing or unpublishing a project or image in EmDash dispatches the workflow
-through the native EmDash plugin. The workflow reads published content, downloads
-responsive WebP variants from Cloudflare Images, and deploys static files to
-Pages. Visitors load images from the portfolio domain; no request waits for the
-CMS. Failed dispatches stay queued in EmDash and retry each minute. Draft saves do
-not rebuild. CMS-only builds keep the deployed GitHub activity snapshot.
+Editing a project or an image is a commit to `main`; the push publishes it.
 
-Configure repository variable `EMDASH_URL` and secrets `EMDASH_TOKEN` (EmDash
-`content:read` and `media:read`), `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET`,
-`CLOUDFLARE_API_TOKEN`, and `CLOUDFLARE_ACCOUNT_ID`. Store a fine-grained GitHub
-token with Actions write access to this repository as the CMS Worker secret
-`PORTFOLIO_GITHUB_TOKEN`. `PORTFOLIO_GH_TOKEN` is optional for activity.
-`make sync-projects` and `make sync-media` refresh the snapshots locally with
-`EMDASH_URL` and a read-only `EMDASH_TOKEN`. Offline builds use the checked-in
-snapshots and image files.
+Repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` for
+Wrangler, and optionally `PORTFOLIO_GH_TOKEN` for GitHub activity (the
+workflow's own token is used otherwise).
 
 ## GitHub contribution snapshot
 
