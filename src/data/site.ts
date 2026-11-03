@@ -15,5 +15,5 @@ export const person = {
   description: 'Software engineer at Zerodha in Bangalore, working with Flutter, Dart, Rust, and Go.',
   worksFor: { '@type': 'Organization', name: 'Zerodha', url: 'https://zerodha.com' },
   knowsAbout: ['Flutter', 'Dart', 'Swift', 'Rust', 'iOS', 'Go'],
-  sameAs: ['https://github.com/devaryakjha'],
+  sameAs: ['https://github.com/devaryakjha', 'https://x.com/_aryakumarjha', 'https://mastodon.social/@aryakumar'],
 };
