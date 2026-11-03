@@ -4,7 +4,7 @@ import { getAllPosts } from '../utils/blog';
 import Artwork from './ProjectArtwork.astro';
 import Workbench from './Workbench.astro';
 import StaticImage from './StaticImage.astro';
-import media from '../data/media.snapshot.json';
+import { media } from '../data/media';
 import portraitMask from '../../public/grid/portrait-mask.svg?raw';
 const posts = await getAllPosts();
 const portraitOutline = portraitMask.match(/ d="([^"]+)"/)![1];
