@@ -145,7 +145,16 @@ assert.deepEqual([...home.matchAll(/data-artwork="([^"]+)"/g)].map(m => m[1]), w
   assert.equal(artwork.running, false, 'Offscreen artwork stays paused on tab changes');
 }
 // The published workbench must render real snapshot values.
-const activity = JSON.parse(fs.readFileSync(path.join(root, 'github-contributions.json'), 'utf8'));
+const activity = JSON.parse(fs.readFileSync(path.join(root, 'github-activity.json'), 'utf8'));
+assert.ok(Array.isArray(activity.releases), 'Activity snapshot lists releases');
+assert.equal(home.includes('LATEST RELEASES'), activity.releases.length > 0, 'Releases block shows only with releases');
+for (const release of activity.releases) {
+  assert.ok(work.some(project => project.slug === release.slug), `${release.slug}: release belongs to a listed project`);
+  assert.ok(release.url.startsWith('https://github.com/') && !Number.isNaN(Date.parse(release.date)) && release.tag, `${release.slug}: release fields`);
+  assert.ok(home.includes(`href="${release.url}"`), `${release.slug}: release on the home page`);
+  const page = fs.readFileSync(path.join(root, 'projects', release.slug, 'index.html'), 'utf8');
+  assert.ok(page.includes(`Latest release: ${release.tag}`), `${release.slug}: release on the project page`);
+}
 assert.equal((home.match(/data-detail=/g) || []).length, activity.days.length);
 assert.ok(home.includes('id="workbench"') && !home.includes('illustrative'));
 for (const day of activity.days) {

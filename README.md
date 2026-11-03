@@ -79,12 +79,17 @@ Repository secrets: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` for
 Wrangler, and optionally `PORTFOLIO_GH_TOKEN` for GitHub activity (the
 workflow's own token is used otherwise).
 
-## GitHub contribution snapshot
+## GitHub activity snapshot
 
-`make refresh-contributions` fetches the current 26-week calendar for `devaryakjha`
-into `public/github-contributions.json`. Requires an authenticated `gh` CLI
-(`gh auth login`, or `GH_TOKEN` in CI). Only dates, aggregate counts, and intensity
-levels are saved; no credentials or repository details enter the site.
+`make refresh-github` writes `public/github-activity.json`: the current 26-week
+contribution calendar for `devaryakjha` (dates, aggregate counts, and intensity
+levels) and the latest GitHub release of each listed project, read from the
+repository in its `source` URL. A repository without releases is left out; if a
+request fails, that project keeps its entry from the previous snapshot. Requires
+an authenticated `gh` CLI (`gh auth login`, or `GH_TOKEN` in CI). No credentials
+enter the site.
 
-Ordinary builds stay offline and use the saved snapshot; the publish job refreshes
-it. This is a deployment-time snapshot, not a live feed.
+The home page shows the calendar and the releases; a project page shows its
+latest release beside the source link. Ordinary builds stay offline and use the
+committed snapshot; the publish job refreshes it. This is a deployment-time
+snapshot, not a live feed.

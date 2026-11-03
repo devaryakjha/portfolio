@@ -1,4 +1,4 @@
-.PHONY: build check refresh-contributions
+.PHONY: build check refresh-github
 
 build:
 	bun run build
@@ -6,5 +6,5 @@ build:
 check:
 	bun run check
 
-refresh-contributions:
-	bun scripts/refresh-contributions.mjs
+refresh-github:
+	bun scripts/refresh-github.mjs

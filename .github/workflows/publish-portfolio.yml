@@ -38,7 +38,7 @@ jobs:
       - name: Refresh GitHub activity
         env:
           GH_TOKEN: ${{ secrets.PORTFOLIO_GH_TOKEN || github.token }}
-        run: bun scripts/refresh-contributions.mjs
+        run: bun scripts/refresh-github.mjs
       - run: bun run build
       - run: bun run check
       - name: Publish static files to Pages

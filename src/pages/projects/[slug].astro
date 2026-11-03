@@ -6,6 +6,7 @@ import ProjectWalkthrough from '../../components/ProjectWalkthrough.astro';
 import OoreWalkthrough from '../../components/OoreWalkthrough.astro';
 import ChekWalkthrough from '../../components/ChekWalkthrough.astro';
 import { site, person } from '../../data/site';
+import { latestRelease, formatDate } from '../../data/activity';
 export function getStaticPaths() { return work.map(project=>({params:{slug:project.slug},props:{project}})); }
 const { project: p } = Astro.props;
 const pageUrl = `${site.url}/projects/${p.slug}`;
@@ -18,6 +19,7 @@ const applications: Record<string, { operatingSystem: string; applicationCategor
 };
 const runtimes: Record<string, string> = { tagflow: 'Flutter', gpuicn: 'Rust, GPUI', anpec: 'Flutter, Android', seisei: 'Dart, Flutter' };
 const app = applications[p.slug];
+const release = latestRelease(p.slug);
 const license = licenses[p.slug] && `https://spdx.org/licenses/${licenses[p.slug]}.html`;
 const structuredData = [{
   '@context': 'https://schema.org',
@@ -39,4 +41,4 @@ const structuredData = [{
   ],
 }];
 ---
-<SiteLayout structuredData={structuredData} ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name}: ${p.short.replace(/\.$/, '')} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a></div></header><Artwork kind={p.slug} name={p.name} />{p.slug === 'oore-build' ? <OoreWalkthrough /> : p.slug === 'chek' ? <ChekWalkthrough /> : <ProjectWalkthrough project={p} />}</article></SiteLayout>
+<SiteLayout structuredData={structuredData} ogImage={`/projects/${p.slug}/og.png`} description={p.description} title={`${p.name}: ${p.short.replace(/\.$/, '')} — Aryakumar Jha`}><article class="case-study"><a class="back" href="/#work">← All projects</a><header class="case-header"><div><p class="small-label">{p.category}</p><h1>{p.name}</h1><p class="case-summary">{p.short}</p></div><div class="case-meta"><p>{p.language}</p><p>{p.state}</p><a href={p.href}>Visit project ↗</a><a href={p.source}>Source code ↗</a>{release && <a href={release.url}>Latest release: {release.tag} · <time datetime={release.date}>{formatDate(release.date)}</time></a>}</div></header><Artwork kind={p.slug} name={p.name} />{p.slug === 'oore-build' ? <OoreWalkthrough /> : p.slug === 'chek' ? <ChekWalkthrough /> : <ProjectWalkthrough project={p} />}</article></SiteLayout>
