@@ -7,7 +7,7 @@ language: Rust / GPUI
 state: Beta
 href: 'https://demo.karyalabs.dev/matty/'
 source: 'https://github.com/karyalabs/matty'
-problem: 'The official Mattermost desktop app is a browser wrapped around the web client. It takes a while to open, holds on to memory, and keeps using CPU when nothing is happening.'
+problem: 'The official Mattermost desktop app is a browser wrapped around the web client. It opens slower, uses several times the memory, and keeps using CPU when nothing is happening.'
 solution: 'Matty is one native process built with GPUI and gpuicn. It reads channels from a local cache, so it opens quickly, switches channels without a spinner, and keeps working offline.'
 highlights:
   - 'Native apps for macOS, Linux, and Windows, plus the same app compiled to WebAssembly for the browser'

@@ -54,8 +54,8 @@ draft for now.
 
 A new project needs custom artwork in `ProjectArtwork.astro` and a walkthrough
 (`ProjectWalkthrough.astro`, or its own component like `OoreWalkthrough.astro`
-and `ChekWalkthrough.astro`). Oore CI, Chek, Tagflow, gpuicn, Anpec, and Seisei
-have both.
+and `ChekWalkthrough.astro`). Oore CI, Chek, Matty, Tagflow, gpuicn, Anpec, and
+Seisei have both.
 
 The site also publishes `/rss.xml` (full posts), `/llms.txt`, and a sitemap.
 Response headers for Pages live in `public/_headers`, redirects in
