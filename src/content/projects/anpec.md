@@ -14,7 +14,7 @@ highlights:
   - Supports capability-aware feature flags and fallback paths
   - 'Helps optimize animations, effects, and expensive processing'
   - Simple integration as a focused plugin
-order: 5
+order: 6
 draft: false
 ---
 

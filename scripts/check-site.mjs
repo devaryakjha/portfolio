@@ -13,7 +13,7 @@ const drafts = readProjects({ includeDrafts: true }).filter(project => project.d
 const posts = fs.readdirSync('src/content/blog').filter(file => file.endsWith('.md'));
 assert.equal(pages.length, 4 + posts.length + work.length, 'Home, about, projects, writing, posts, and 404');
 const socialImages = new Set();
-for (const slug of ['oore-build', 'chek', 'tagflow', 'gpuicn', 'anpec', 'seisei']) {
+for (const slug of ['oore-build', 'chek', 'matty', 'tagflow', 'gpuicn', 'anpec', 'seisei']) {
   if (!work.some(project => project.slug === slug)) continue;
   const html = fs.readFileSync(path.join(root, 'projects', slug, 'index.html'), 'utf8');
   assert.equal((html.match(/<figcaption(?:\s|>)/g) || []).length, 2, `${slug}: two labeled walkthrough examples`);
@@ -67,7 +67,7 @@ for (const page of pages.filter(p => /^blog\/.+\/index.html$/.test(p))) {
 for (const project of work) {
   const html = fs.readFileSync(path.join(root, 'projects', project.slug, 'index.html'), 'utf8');
   const [schema, breadcrumbs] = readSchemas(html);
-  assert.equal(schema['@type'], ['chek', 'oore-build'].includes(project.slug) ? 'SoftwareApplication' : 'SoftwareSourceCode', `${project.slug}: structured data type`);
+  assert.equal(schema['@type'], ['chek', 'oore-build', 'matty'].includes(project.slug) ? 'SoftwareApplication' : 'SoftwareSourceCode', `${project.slug}: structured data type`);
   assert.equal(schema.name, project.name);
   assert.equal(schema.author['@id'], profile.mainEntity['@id']);
   if (schema['@type'] === 'SoftwareSourceCode') assert.equal(schema.codeRepository, project.source);
