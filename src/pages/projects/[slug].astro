@@ -11,11 +11,12 @@ export function getStaticPaths() { return work.map(project=>({params:{slug:proje
 const { project: p } = Astro.props;
 const pageUrl = `${site.url}/projects/${p.slug}`;
 // Licenses as published in each repository's LICENSE file; unknown projects omit the field.
-const licenses: Record<string, string> = { 'oore-build': 'MIT', chek: 'AGPL-3.0-only', tagflow: 'MIT', gpuicn: 'MIT', anpec: 'MIT', seisei: 'MIT' };
+const licenses: Record<string, string> = { 'oore-build': 'MIT', chek: 'AGPL-3.0-only', matty: 'MIT', tagflow: 'MIT', gpuicn: 'MIT', anpec: 'MIT', seisei: 'MIT' };
 // Shipped apps are applications; the rest are libraries and packages people build with.
 const applications: Record<string, { operatingSystem: string; applicationCategory: string }> = {
   chek: { operatingSystem: 'iOS, iPadOS, Web', applicationCategory: 'BookApplication' },
   'oore-build': { operatingSystem: 'macOS', applicationCategory: 'DeveloperApplication' },
+  matty: { operatingSystem: 'macOS, Linux, Windows, Web', applicationCategory: 'CommunicationApplication' },
 };
 const runtimes: Record<string, string> = { tagflow: 'Flutter', gpuicn: 'Rust, GPUI', anpec: 'Flutter, Android', seisei: 'Dart, Flutter' };
 const app = applications[p.slug];

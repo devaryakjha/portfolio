@@ -15,7 +15,7 @@ highlights:
   - Trusted JSON input with validation and content policies
   - Document patches for live content updates
   - Tables through the tagflow_table extension
-order: 3
+order: 4
 draft: false
 ---
 

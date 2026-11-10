@@ -13,7 +13,7 @@ highlights:
   - Typed AI contracts
   - Dart and Flutter
   - Open source
-order: 6
+order: 7
 draft: true
 ---
 
